@@ -1,0 +1,41 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "rnkm63-backend"
+  namespace: "default"
+  labels:
+    app: "rnkm63-backend"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "rnkm63-backend"
+  template:
+    metadata:
+      labels:
+        app: "rnkm63-backend"
+    spec:
+      containers:
+      - name: "backend-sha256-1"
+        image: "gcr.io/rnkm63/backend:latest"
+---
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "rnkm63-backend-hpa-yptr"
+  namespace: "default"
+  labels:
+    app: "rnkm63-backend"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "rnkm63-backend"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      targetAverageUtilization: 80
