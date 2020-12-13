@@ -6,6 +6,7 @@ import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.setGlobalPrefix('api');
 
   const configService = app.get(ConfigService);
 
@@ -21,7 +22,7 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.use(cookieParser());
-  app.setGlobalPrefix('api');
+
   await app.listen(configService.get('port'));
 }
 bootstrap();
