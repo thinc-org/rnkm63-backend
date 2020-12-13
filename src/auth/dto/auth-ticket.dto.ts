@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class AuthTicketDto {
-  @ApiProperty()
+  @ApiProperty({ description: 'Ticket from sso' })
   readonly ticket: string;
 }
