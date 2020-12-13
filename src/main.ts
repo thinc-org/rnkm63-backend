@@ -10,12 +10,12 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   
   const options = new DocumentBuilder()
-  .setTitle('RNKM 63 API')
-  .setDescription('Doc for API')
-  .setVersion('1.0')
-  .addTag('user')
-  .addTag('auth')
-  .build();
+    .setTitle('RNKM 63 API')
+    .setDescription('Doc for API')
+    .setVersion('1.0')
+    .addTag('user')
+    .addTag('auth')
+    .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
 
