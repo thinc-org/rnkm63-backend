@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Query, Res } from '@nestjs/common';
 import {
+  ApiBadRequestResponse,
   ApiForbiddenResponse,
-  ApiNoContentResponse,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -17,10 +18,11 @@ export class AuthController {
   @Get('verify')
   @ApiOperation({ summary: 'Ticket Verify' })
   @ApiOkResponse({ description: 'Ticket Verified and get user cookie back' })
-  @ApiNoContentResponse({ description: 'Ticket Not Verified' })
-  @ApiForbiddenResponse({ description: 'Not 63 Student' })
-  getVerify(@Body() body: AuthTicketDto) {
-    return this.authService.getVerify(body.ticket);
+  @ApiNotFoundResponse({ description: 'Ticket Not Verified' })
+  @ApiForbiddenResponse({ description: 'Not 63/Freshmen Student' })
+  @ApiBadRequestResponse({ description: 'No Ticket Found' })
+  async getVerify(@Query() query: AuthTicketDto, @Res() res) {
+    return this.authService.getVerify(query.ticket, res);
   }
 
   @Get('logout')
