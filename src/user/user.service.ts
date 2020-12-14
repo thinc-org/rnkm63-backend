@@ -50,7 +50,7 @@ export class UserService {
     const religion = ['พุทธ', 'คริส', 'อิสลาม'];
 
     const user = new User();
-    user.uid = 'UID-' + generateRandomString(8);
+    user.uid = '633' + generateRandomNumber(7);
     user.prefixname = prefixName[Math.floor(Math.random() * prefixName.length)];
     user.realname = 'realname-' + generateRandomString(6, true).toLowerCase();
     user.surname = 'surname-' + generateRandomString(6, true).toLowerCase();

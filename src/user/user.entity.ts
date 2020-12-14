@@ -5,7 +5,7 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ length: 10, unique: true })
   uid: string;
 
   @Column()
@@ -23,19 +23,19 @@ export class User {
   @Column()
   religion: string;
 
-  @Column()
+  @Column({ nullable: true })
   disease: string | null;
 
-  @Column()
+  @Column({ nullable: true })
   allergyMedicine: string | null;
 
-  @Column()
+  @Column({ nullable: true })
   usedMedicine: string | null;
 
-  @Column()
+  @Column({ nullable: true })
   foodRestriction: string | null;
 
-  @Column()
+  @Column({ nullable: true })
   disablity: string | null;
 
   @Column()
@@ -59,7 +59,7 @@ export class User {
   @Column()
   isImgWrong: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   reason: string | null;
 
   @Column()
@@ -74,10 +74,10 @@ export class User {
   @Column()
   isTransfer: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   currentBaan: number | null;
 
-  @Column()
+  @Column({ nullable: true })
   preferBaan: number | null;
 
   @Column()
