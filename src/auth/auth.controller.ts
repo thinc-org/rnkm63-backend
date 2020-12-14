@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Query, Res } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
   ApiBadRequestResponse,
+  ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiInternalServerErrorResponse,
   ApiOkResponse,
@@ -12,6 +13,7 @@ import {
 } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { AuthTicketDto } from './dto/auth-ticket.dto';
+import { TokenDto } from './dto/token.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -32,6 +34,10 @@ export class AuthController {
   })
   @ApiInternalServerErrorResponse({
     description: "Can't connect to SSO or Internal Server Error",
+  })
+  @ApiCreatedResponse({
+    description: 'Ticket has been checked',
+    type: TokenDto,
   })
   async getVerify(
     @Query() query: AuthTicketDto,
