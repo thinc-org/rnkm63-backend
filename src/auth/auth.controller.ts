@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Query, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Query,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
   ApiBadRequestResponse,
@@ -14,6 +23,7 @@ import {
 import { AuthService } from './auth.service';
 import { AuthTicketDto } from './dto/auth-ticket.dto';
 import { TokenDto } from './dto/token.dto';
+import { JwtAuthGuard } from './jwt-auth.guard';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -46,9 +56,10 @@ export class AuthController {
     return this.authService.verifyTicket(query.ticket, res);
   }
 
-  @Get('logout')
-  @ApiOkResponse({ description: 'Logout Sucess' })
-  getLogout() {
-    return this.authService.getLogout();
+  @Get('user')
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ description: 'Get User Token: For Dev about jwt' })
+  getLogout(@Req() req) {
+    return req.user;
   }
 }
