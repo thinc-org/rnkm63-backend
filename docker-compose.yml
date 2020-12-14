@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - ./volumes/pgdata:/var/lib/postgresql/data
+    ports:
+      - ${DATABASE_PORT}:5432
+  chulassomock:
+    image: pay2630/chulassomock
+    restart: always
+    ports:
+      - 8080:8080
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+      PGADMIN_LISTEN_PORT: ${PGADMIN_PORT}
+    ports:
+      - ${PGADMIN_PORT}:${PGADMIN_PORT}
+    volumes:
+      - ./pgadmin/servers.json:/pgadmin4/servers.json
