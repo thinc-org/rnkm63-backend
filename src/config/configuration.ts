@@ -13,4 +13,5 @@ export default () => ({
     appSecret: process.env.SSO_APPSECRET,
   },
   jwtSecret: process.env.JWT_SECRET,
+  development: process.env.IN_DEV,
 });
