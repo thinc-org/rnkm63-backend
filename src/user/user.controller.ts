@@ -16,4 +16,14 @@ export class UserController {
   postProfile() {
     return this.userService.postProfile();
   }
+
+  @Get('getAllUser')
+  getAllUser() {
+    return this.userService.getAllUser();
+  }
+
+  @Get('generateUser')
+  generateUser() {
+    return this.userService.generateUser();
+  }
 }
