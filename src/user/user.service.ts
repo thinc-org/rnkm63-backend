@@ -31,11 +31,39 @@ export class UserService {
     //post dat
   }
 
-  async getAllUser(): Promise<User[]> {
-    return await this.userRepository.find();
-  }
   //Begin For Test Only Section
-  async generateUser(): Promise<User> {
+  getAllUser(): Promise<User[]> {
+    return this.userRepository.find();
+  }
+
+  findUser(userID): Promise<User> {
+    return this.userRepository.findOne({ uid: userID });
+  }
+
+  generateUser(): Promise<User> {
+    const generateRandomString = (
+      len: number,
+      excludeNumber: boolean = false,
+    ): string => {
+      let availableString: string =
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let generateString: string = '';
+      for (let i = 0; i < len; i++)
+        generateString +=
+          availableString[
+            Math.floor(
+              Math.random() *
+                (availableString.length - (excludeNumber ? 10 : 0)),
+            )
+          ];
+      return generateString;
+    };
+    const generateRandomNumber = (len: number): string => {
+      let generateString: string = '';
+      for (let i = 0; i < len; i++)
+        generateString += Math.floor(Math.random() * 10).toString();
+      return generateString;
+    };
     const prefixName = ['นาย', 'นาง', 'นางสาว'];
     const religion = ['พุทธ', 'คริส', 'อิสลาม'];
 
@@ -67,7 +95,7 @@ export class UserService {
     user.currentBaan = Math.floor(Math.random() * 36);
     user.preferBaan = null;
     user.imgURL = '';
-    return await this.userRepository.save(user);
+    return this.userRepository.save(user);
   }
 
   mockUser(mode): ReturnUserDTO {

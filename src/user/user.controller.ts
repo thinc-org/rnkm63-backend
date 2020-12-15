@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Param } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { ConfirmUserDTO, UserData } from './dto/create-user.dto';
@@ -19,6 +19,7 @@ export class UserController {
     return this.userService.postProfile(confirmUserDTO);
   }
 
+  //Begin For Test Only Section
   @Get('getAllUser')
   getAllUser() {
     return this.userService.getAllUser();
@@ -47,4 +48,10 @@ export class UserController {
   getMockData(@Query() query: MockUserDTO) {
     return this.userService.mockUser(query.mode);
   }
+
+  @Get(':id')
+  findUser(@Param() params) {
+    return this.userService.findUser(params.id);
+  }
+  //End For Test Only Section
 }
