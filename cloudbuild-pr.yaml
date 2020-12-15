@@ -5,3 +5,4 @@ steps:
       - --destination=gcr.io/rnkm63/backend:$BRANCH_NAME
       - --cache=true
       - --cache-ttl=336h
+      - --target=build
