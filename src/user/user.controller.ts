@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
-import { ConfirmUserDTO, UserData } from './interface/user.interface';
+import { ConfirmUserDTO, UserData } from './dto/create-user.dto';
 
 @ApiTags('user')
 @Controller('user')
@@ -14,11 +14,8 @@ export class UserController {
   }
 
   @Post('profile')
-  postProfile(
-    @Body() confirmUserDTO: ConfirmUserDTO,
-    userData: UserData,
-  ): string {
-    return this.userService.postProfile(confirmUserDTO, userData);
+  postProfile(@Body() confirmUserDTO: ConfirmUserDTO): string {
+    return this.userService.postProfile(confirmUserDTO);
   }
 
   @Get('getAllUser')

@@ -1,9 +1,9 @@
-export interface ConfirmUserDTO {
+export class ConfirmUserDTO {
   data: UserData;
   edit: boolean;
 }
 
-export interface UserData {
+export class UserData {
   prefix: string;
   realname: string;
   surname: string;
