@@ -13,5 +13,12 @@ export default () => ({
     appSecret: process.env.SSO_APPSECRET,
   },
   jwt: { secret: process.env.JWT_SECRET, expires: process.env.JWT_EXPIRES },
+  gcs: {
+    keyFileName: process.env.KEY_FILE_PATH,
+    projectID: process.env.PROJECT_ID,
+    bucketName: process.env.BUCKET_NAME,
+    secret: process.env.IMG_FILE_NAME_SECRET,
+  },
+  jwtSecret: process.env.JWT_SECRET,
   inDev: process.env.IN_DEV,
 });

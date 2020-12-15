@@ -1,13 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { GenerateSignedPostPolicyV4Options } from '@google-cloud/storage';
 import { User } from './user.entity';
+import googleStorage from '../utils/googleStorage';
+import { ConfigService } from '@nestjs/config';
+import crypto from 'crypto';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    private configService: ConfigService,
   ) {}
 
   getProfile(): string {
@@ -80,4 +85,28 @@ export class UserService {
     return await this.userRepository.save(user);
   }
   //End For Test Only Section
+
+  getImgFileName(ouid: string): string {
+    const secret = this.configService.get<string>('gcs.secret');
+    const fileName = `profilepics/n-baan/${ouid}-${crypto
+      .createHash('sha256')
+      .update(`${ouid}${secret}`)
+      .digest('hex')}.jpg`;
+    return fileName;
+  }
+
+  async getUploadCred(fileName) {
+    const imgStorage = new googleStorage(this.configService);
+    const options: GenerateSignedPostPolicyV4Options = {
+      expires: new Date().getTime() + 10 * 60 * 1000,
+      conditions: [
+        ['eq', '$Content-Type', 'image/jpeg'],
+        ['content-length-range', 0, 1024],
+      ],
+    };
+    const cred = await imgStorage.bucket
+      .file(fileName)
+      .generateSignedPostPolicyV4(options);
+    return cred[0];
+  }
 }
