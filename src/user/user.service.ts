@@ -22,9 +22,13 @@ export class UserService {
 
   getProfile(): string {
     return 'profile';
+    //not done
+    //get data from database
   }
-  postProfile(data: Data, postData: postUserData) {
+  postProfile(data: Data, postData: postUserData): string {
     return 'update';
+    //not done
+    //post dat
   }
 
   async getAllUser(): Promise<User[]> {

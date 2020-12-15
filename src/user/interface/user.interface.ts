@@ -1,4 +1,5 @@
-export interface postUserData {
+export interface ConfirmUserDTO {
+  data: UserData;
   picName: string;
   isNameWrong: boolean;
   isImgWrong: boolean;
@@ -14,11 +15,7 @@ export interface postUserData {
   };
 }
 
-export interface getUserData {
-  edit: boolean;
-}
-
-export interface Data {
+export interface UserData {
   prefix: string;
   realname: string;
   surname: string;
