@@ -1,0 +1,7 @@
+steps:
+  # build the container image
+  - name: 'gcr.io/kaniko-project/executor:latest'
+    args:
+      - --destination=gcr.io/rnkm63/backend:$BRANCH_NAME
+      - --cache=true
+      - --cache-ttl=336h
