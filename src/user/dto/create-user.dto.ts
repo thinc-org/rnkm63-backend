@@ -3,7 +3,7 @@ export class ConfirmUserDTO {
   edit: boolean;
 }
 
-export class ReturntUserDTO {
+export class ReturnUserDTO {
   data: UserData;
   isNameWrong: boolean;
   isImgWrong: boolean;
