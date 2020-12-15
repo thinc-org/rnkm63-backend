@@ -6,11 +6,7 @@ import { User } from './user.entity';
 import googleStorage from '../utils/googleStorage';
 import { ConfigService } from '@nestjs/config';
 import crypto from 'crypto';
-import {
-  ConfirmUserDTO,
-  ReturntUserDTO,
-  UserData,
-} from './dto/create-user.dto';
+import { ConfirmUserDTO, ReturnUserDTO, UserData } from './dto/create-user.dto';
 import {
   generateRandomString,
   generateRandomNumber,
@@ -74,10 +70,10 @@ export class UserService {
     return await this.userRepository.save(user);
   }
 
-  async mockUser(mode): Promise<ReturntUserDTO> {
+  async mockUser(mode): Promise<ReturnUserDTO> {
     const prefixName = ['นาย', 'นาง', 'นางสาว'];
     const religion = ['พุทธ', 'คริส', 'อิสลาม'];
-    const user = new ReturntUserDTO();
+    const user = new ReturnUserDTO();
     const userData = new UserData();
     // userData.uid = '633' + generateRandomNumber(7);
     userData.prefixname =
