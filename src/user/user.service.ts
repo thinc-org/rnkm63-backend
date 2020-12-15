@@ -6,7 +6,7 @@ import { User } from './user.entity';
 import googleStorage from '../utils/googleStorage';
 import { ConfigService } from '@nestjs/config';
 import crypto from 'crypto';
-import { postUserData } from './interface/user.interface';
+import { postUserData, Data } from './interface/user.interface';
 import {
   generateRandomString,
   generateRandomNumber,
@@ -23,7 +23,7 @@ export class UserService {
   getProfile(): string {
     return 'profile';
   }
-  postProfile(data: postUserData) {
+  postProfile(data: Data, postData: postUserData) {
     return 'update';
   }
 
