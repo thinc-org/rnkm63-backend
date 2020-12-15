@@ -74,9 +74,24 @@ spec:
                   name: backend-secrets
                   key: jwt_secret
 
-            # Google Service Account key path
-            - name: GOOGLE_APPLICATION_CREDENTIALS
+            # GCS credentials
+            - name: KEY_FILE_PATH
               value: /etc/secrets/gsa_key
+            - name: PROJECT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: gcp_project_id
+            - name: BUCKET_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: gcs_bucket_name
+            - name: IMG_FILE_NAME_SECERET
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: img_file_name_secret
           volumeMounts:
             - name: secrets
               mountPath: '/etc/secrets'
