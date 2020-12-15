@@ -4,17 +4,25 @@ import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
 import { JwtDto } from './dto/jwt.dto';
 
+var cookieExtractor = function(req) {
+  var token = null;
+  if (req && req.cookies) {
+    token = req.cookies['token'];
+  }
+  return token;
+};
+
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private configService: ConfigService) {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
       secretOrKey: configService.get<string>('jwt.secret'),
     });
   }
 
-  validate(payload: JwtDto) {
+  validate(payload: JwtDto): JwtDto {
     // console.log(payload);
-    return payload.user;
+    return { uid: payload.uid };
   }
 }

@@ -18,10 +18,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async verifyTicket(ticket: string, res: Response): Promise<TokenDto> {
-    if (!ticket) {
-      throw new HttpException('Ticket not found', HttpStatus.BAD_REQUEST);
-    }
+  async verifyTicketWithSSO(ticket: string): Promise<any> {
     try {
       const source = axios.CancelToken.source();
       const timeout = setTimeout(() => {
@@ -38,14 +35,7 @@ export class AuthService {
         })
         .toPromise();
       clearTimeout(timeout);
-      if (user.data.ouid.slice(0, 2) !== '63') {
-        throw new HttpException('Only Freshmen', HttpStatus.FORBIDDEN);
-      }
-      const uid = user.data.ouid;
-      const token = this.jwtService.sign({ user: uid });
-      // res.cookie('refreshToken', '');
-      // console.log(token);
-      return { message: 'Ticket verify', token };
+      return user.data.ouid;
     } catch (error) {
       if (error.response.status === 401) {
         throw new HttpException(
@@ -64,6 +54,20 @@ export class AuthService {
         );
       }
     }
+  }
+
+  async verifyTicket(ticket: string, res: Response): Promise<any> {
+    if (!ticket) {
+      throw new HttpException('Ticket not found', HttpStatus.BAD_REQUEST);
+    }
+    const uid = await this.verifyTicketWithSSO(ticket);
+    if (uid.slice(0, 2) !== '63') {
+      throw new HttpException('Only Freshmen', HttpStatus.FORBIDDEN);
+    }
+    const token = this.jwtService.sign({ uid: uid });
+    res.cookie('token', token);
+    // console.log(token);
+    return { message: 'Ticket verify' };
   }
 
   getLogout(): string {

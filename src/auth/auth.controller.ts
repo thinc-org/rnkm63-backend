@@ -11,7 +11,6 @@ import {
 import { ConfigService } from '@nestjs/config';
 import {
   ApiBadRequestResponse,
-  ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiInternalServerErrorResponse,
   ApiOkResponse,
@@ -44,10 +43,6 @@ export class AuthController {
   })
   @ApiInternalServerErrorResponse({
     description: "Can't connect to SSO or Internal Server Error",
-  })
-  @ApiCreatedResponse({
-    description: 'Ticket has been checked',
-    type: TokenDto,
   })
   async getVerify(
     @Query() query: AuthTicketDto,
