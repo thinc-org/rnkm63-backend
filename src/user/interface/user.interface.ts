@@ -1,18 +1,6 @@
 export interface ConfirmUserDTO {
   data: UserData;
-  picName: string;
-  isNameWrong: boolean;
-  isImgWrong: boolean;
-  isQualified: boolean;
-  noData: boolean;
-  isConfirm: boolean;
-  isTransfer: boolean;
-  currentBaanId: number | null;
-  preferredBaanId: number | null;
-  faculty: {
-    name_en: string;
-    name_th: string;
-  };
+  edit: boolean;
 }
 
 export interface UserData {
