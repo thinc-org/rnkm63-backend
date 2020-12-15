@@ -6,7 +6,11 @@ import { User } from './user.entity';
 import googleStorage from '../utils/googleStorage';
 import { ConfigService } from '@nestjs/config';
 import crypto from 'crypto';
-import { ConfirmUserDTO, UserData } from './dto/create-user.dto';
+import {
+  ConfirmUserDTO,
+  ReturntUserDTO,
+  UserData,
+} from './dto/create-user.dto';
 import {
   generateRandomString,
   generateRandomNumber,
@@ -68,6 +72,51 @@ export class UserService {
     user.preferBaan = null;
     user.imgURL = '';
     return await this.userRepository.save(user);
+  }
+
+  async mockUser(mode): Promise<ReturntUserDTO> {
+    const prefixName = ['นาย', 'นาง', 'นางสาว'];
+    const religion = ['พุทธ', 'คริส', 'อิสลาม'];
+    const user = new ReturntUserDTO();
+    const userData = new UserData();
+    // userData.uid = '633' + generateRandomNumber(7);
+    userData.prefixname =
+      prefixName[Math.floor(Math.random() * prefixName.length)];
+    userData.realname =
+      'realname-' + generateRandomString(6, true).toLowerCase();
+    userData.surname = 'surname-' + generateRandomString(6, true).toLowerCase();
+    userData.nickname =
+      'nickname-' + generateRandomString(4, true).toLowerCase();
+    userData.religion =
+      'religion-' + religion[Math.floor(Math.random() * religion.length)];
+    userData.disease = '';
+    userData.allergyMedicine = '';
+    userData.usedMedicine = '';
+    userData.foodRestriction = '';
+    userData.disability = '';
+    userData.tel = generateRandomNumber(10);
+    userData.emergencyTel = generateRandomNumber(10);
+    userData.emergencyTelRelationship = '';
+    userData.facebook = 'www.facebook.com/' + generateRandomString(8);
+    userData.lineID = generateRandomString(8);
+    if (mode > 0) {
+      user.data = userData;
+      user.isNameWrong = mode % 2 == 1 && mode < 4;
+      user.isImgWrong = mode > 1 && mode < 4;
+      user.reason = mode > 3 ? null : 'There is a reason';
+    } else {
+      user.data = null;
+      user.isNameWrong = false;
+      user.isImgWrong = false;
+      user.reason = null;
+    }
+    user.isQualified = mode == 4;
+    user.isConfirm = mode == 5;
+    user.isTransfer = false;
+    user.currentBaan = Math.floor(Math.random() * 36);
+    user.preferBaan = null;
+    user.imgURL = '';
+    return user;
   }
   //End For Test Only Section
 
