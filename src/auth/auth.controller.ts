@@ -17,11 +17,13 @@ import {
   ApiOperation,
   ApiTags,
   ApiTooManyRequestsResponse,
+  ApiUnauthorizedResponse,
   ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { AuthTicketDto } from './dto/auth-ticket.dto';
 import { TokenDto } from './dto/token.dto';
+import { HeaderGuard } from './header.guard';
 import { JwtAuthGuard } from './jwt-auth.guard';
 
 @ApiTags('auth')
@@ -52,9 +54,27 @@ export class AuthController {
   }
 
   @Get('user')
+  @UseGuards(HeaderGuard)
   @UseGuards(JwtAuthGuard)
-  @ApiOkResponse({ description: 'Get User Token: For Dev about jwt' })
-  getLogout(@Req() req) {
+  @ApiOperation({
+    summary: 'Get User Uid',
+    description:
+      'Check if fetch with cookie and custom headers works : For Dev about headers and Jwt Guard',
+  })
+  getUser(@Req() req) {
     return req.user;
+  }
+
+  @Get('logout')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({
+    summary: 'Clear cookie',
+    description:
+      'Check if fetch with cookie works : For Dev+frontend test about Jwt Guard',
+  })
+  @ApiUnauthorizedResponse({ description: 'No Cookie Token' })
+  getLogout(@Req() req, @Res({ passthrough: true }) res) {
+    res.clearCookie('token');
+    return { message: 'Cleared Cookie/Logout' };
   }
 }
