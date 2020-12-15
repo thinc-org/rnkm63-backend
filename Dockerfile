@@ -23,4 +23,4 @@ RUN yarn
 COPY --from=build /usr/src/app/dist ./dist
 
 EXPOSE 3000
-CMD yarn start:prod
+CMD yarn typeorm:prod migration:run && yarn start:prod
