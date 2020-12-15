@@ -70,9 +70,17 @@ export class UserService {
     return await this.userRepository.save(user);
   }
 
-  async mockUser(mode): Promise<ReturnUserDTO> {
+  mockUser(mode): ReturnUserDTO {
     const prefixName = ['นาย', 'นาง', 'นางสาว'];
-    const religion = ['พุทธ', 'คริส', 'อิสลาม'];
+    const religion = [
+      'buddhism',
+      'christianity',
+      'islam',
+      'hinduism',
+      'sikhism',
+      'other',
+      'RNS',
+    ];
     const user = new ReturnUserDTO();
     const userData = new UserData();
     // userData.uid = '633' + generateRandomNumber(7);
@@ -83,8 +91,7 @@ export class UserService {
     userData.surname = 'surname-' + generateRandomString(6, true).toLowerCase();
     userData.nickname =
       'nickname-' + generateRandomString(4, true).toLowerCase();
-    userData.religion =
-      'religion-' + religion[Math.floor(Math.random() * religion.length)];
+    userData.religion = religion[Math.floor(Math.random() * religion.length)];
     userData.disease = '';
     userData.allergyMedicine = '';
     userData.usedMedicine = '';
