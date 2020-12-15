@@ -6,7 +6,7 @@ import { User } from './user.entity';
 import googleStorage from '../utils/googleStorage';
 import { ConfigService } from '@nestjs/config';
 import crypto from 'crypto';
-import { postUserData, Data } from './interface/user.interface';
+import { ConfirmUserDTO, UserData } from './dto/create-user.dto';
 import {
   generateRandomString,
   generateRandomNumber,
@@ -25,7 +25,7 @@ export class UserService {
     //not done
     //get data from database
   }
-  postProfile(data: Data, postData: postUserData): string {
+  postProfile(confirmUserDTO: ConfirmUserDTO): string {
     return 'update';
     //not done
     //post dat
