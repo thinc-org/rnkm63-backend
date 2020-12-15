@@ -50,6 +50,28 @@ spec:
                   name: backend-secrets
                   key: db_password
 
+            # InfluxDB
+            - name: INFLUXDB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: influxdb_url
+            - name: INFLUXDB_ORG
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: influxdb_org
+            - name: INFLUXDB_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: influxdb_bucket
+            - name: INFLUXDB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: influxdb_token
+
             # Chula SSO
             - name: SSO_URL
               valueFrom:
