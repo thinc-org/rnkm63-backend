@@ -1,3 +1,3 @@
 export class JwtDto {
-  readonly user: string;
+  readonly uid: string;
 }
