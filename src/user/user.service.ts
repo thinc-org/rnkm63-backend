@@ -6,6 +6,7 @@ import { User } from './user.entity';
 import googleStorage from '../utils/googleStorage';
 import { ConfigService } from '@nestjs/config';
 import crypto from 'crypto';
+import { postUserData } from './interface/user.interface';
 
 @Injectable()
 export class UserService {
@@ -18,8 +19,8 @@ export class UserService {
   getProfile(): string {
     return 'profile';
   }
-  postProfile(): string {
-    return 'updated';
+  postProfile(data: postUserData) {
+    return 'update';
   }
 
   async getAllUser(): Promise<User[]> {

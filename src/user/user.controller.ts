@@ -1,6 +1,7 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
+import { postUserDto, getUserDto } from './dto/create-user.dto';
 
 @ApiTags('user')
 @Controller('user')
@@ -13,8 +14,8 @@ export class UserController {
   }
 
   @Post('profile')
-  postProfile() {
-    return this.userService.postProfile();
+  postProfile(@Body() postData: postUserDto) {
+    return this.userService.postProfile(postData);
   }
 
   @Get('getAllUser')
