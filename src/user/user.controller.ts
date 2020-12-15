@@ -1,6 +1,7 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
+import { ConfirmUserDTO, UserData } from './interface/user.interface';
 
 @ApiTags('user')
 @Controller('user')
@@ -8,13 +9,16 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get('profile')
-  getProfile() {
+  getProfile(): string {
     return this.userService.getProfile();
   }
 
   @Post('profile')
-  postProfile() {
-    return this.userService.postProfile();
+  postProfile(
+    @Body() confirmUserDTO: ConfirmUserDTO,
+    userData: UserData,
+  ): string {
+    return this.userService.postProfile(confirmUserDTO, userData);
   }
 
   @Get('getAllUser')
