@@ -9,5 +9,5 @@ export class Baan {
   capacity: number;
 
   @Column()
-  member: number;
+  memberCount: number;
 }
