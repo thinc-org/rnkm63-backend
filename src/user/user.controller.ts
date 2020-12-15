@@ -30,15 +30,13 @@ export class UserController {
   @Get()
   getUploadCred() {
     const ouid = 'userId';
-    const baanId = 99;
-    const fileName = this.userService.getImgFileName(ouid, baanId);
+    const fileName = this.userService.getImgFileName(ouid);
     return this.userService.getUploadCred(fileName);
   }
 
   @Get('uploadFileName')
   getUploadFileName() {
     const ouid = 'userId';
-    const baanId = 99;
-    return this.userService.getImgFileName(ouid, baanId);
+    return this.userService.getImgFileName(ouid);
   }
 }

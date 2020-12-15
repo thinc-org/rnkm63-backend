@@ -86,9 +86,9 @@ export class UserService {
   }
   //End For Test Only Section
 
-  getImgFileName(ouid: string, baanId: number): string {
+  getImgFileName(ouid: string): string {
     const secret = this.configService.get<string>('gcs.secret');
-    const fileName = `profilepics/${baanId}-baan/${ouid}-${crypto
+    const fileName = `profilepics/n-baan/${ouid}-${crypto
       .createHash('sha256')
       .update(`${ouid}${secret}`)
       .digest('hex')}.jpg`;
@@ -98,7 +98,7 @@ export class UserService {
   async getUploadCred(fileName) {
     const imgStorage = new googleStorage(this.configService);
     const options: GenerateSignedPostPolicyV4Options = {
-      expires: new Date().getTime() + 15 * 60 * 1000,
+      expires: new Date().getTime() + 10 * 60 * 1000,
       conditions: [
         ['eq', '$Content-Type', 'image/jpeg'],
         ['content-length-range', 0, 1024],
