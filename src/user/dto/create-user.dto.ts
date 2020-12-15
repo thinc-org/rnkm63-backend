@@ -3,8 +3,21 @@ export class ConfirmUserDTO {
   edit: boolean;
 }
 
+export class ReturntUserDTO {
+  data: UserData;
+  isNameWrong: boolean;
+  isImgWrong: boolean;
+  reason: string | null;
+  isQualified: boolean;
+  isConfirm: boolean;
+  isTransfer: boolean;
+  currentBaan: number;
+  preferBaan: number | null;
+  imgURL: string;
+}
+
 export class UserData {
-  prefix: string;
+  prefixname: string;
   realname: string;
   surname: string;
   nickname: string;
@@ -13,7 +26,7 @@ export class UserData {
   facebook: string;
   lineID: string;
   emergencyTel: string;
-  emergencyRelationship: string;
+  emergencyTelRelationship: string;
   disease: string;
   allergyMedicine: string;
   usedMedicine: string;

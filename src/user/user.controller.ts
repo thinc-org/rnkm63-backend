@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { ConfirmUserDTO, UserData } from './dto/create-user.dto';
+import { MockUserDTO } from './dto/mock.dto';
 
 @ApiTags('user')
 @Controller('user')
@@ -39,5 +40,11 @@ export class UserController {
   getUploadFileName() {
     const ouid = 'userId';
     return this.userService.getImgFileName(ouid);
+  }
+
+  @Get('mockUser')
+  @ApiOperation({ summary: 'Get Mock User Date delete after real finish' })
+  getMockData(@Query() query: MockUserDTO) {
+    return this.userService.mockUser(query.mode);
   }
 }
