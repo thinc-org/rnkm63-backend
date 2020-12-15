@@ -38,3 +38,6 @@ lerna-debug.log*
 
 # Docker
 /volumes
+
+# Cloud Storage
+service_access_key.json

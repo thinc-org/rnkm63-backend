@@ -26,4 +26,19 @@ export class UserController {
   generateUser() {
     return this.userService.generateUser();
   }
+
+  @Get()
+  getUploadCred() {
+    const ouid = 'userId';
+    const baanId = 99;
+    const fileName = this.userService.getImgFileName(ouid, baanId);
+    return this.userService.getUploadCred(fileName);
+  }
+
+  @Get('uploadFileName')
+  getUploadFileName() {
+    const ouid = 'userId';
+    const baanId = 99;
+    return this.userService.getImgFileName(ouid, baanId);
+  }
 }
