@@ -66,7 +66,6 @@ export class AuthService {
     }
     const token = this.jwtService.sign({ uid: uid });
     res.cookie('token', token);
-    // console.log(token);
     return { message: 'Ticket verify' };
   }
 
