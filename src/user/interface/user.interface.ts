@@ -1,22 +1,4 @@
 export interface postUserData {
-  data: {
-    prefix: string;
-    realname: string;
-    surname: string;
-    nickname: string;
-    religion: string;
-    tel: string;
-    facebook: string;
-    lineID: string;
-    emergencyTel: string;
-    emergencyRelationship: string;
-    disease: string;
-    allergyMedicine: string;
-    usedMedicine: string;
-    foodRestriction: string;
-    disability: string;
-    imgURL: string;
-  };
   picName: string;
   isNameWrong: boolean;
   isImgWrong: boolean;
@@ -33,23 +15,24 @@ export interface postUserData {
 }
 
 export interface getUserData {
-  data: {
-    prefix: string;
-    realname: string;
-    surname: string;
-    nickname: string;
-    religion: string;
-    tel: string;
-    facebook: string;
-    lineID: string;
-    emergencyTel: string;
-    emergencyRelationship: string;
-    disease: string;
-    allergyMedicine: string;
-    usedMedicine: string;
-    foodRestriction: string;
-    disability: string;
-    imgURL: string;
-  };
   edit: boolean;
+}
+
+export interface Data {
+  prefix: string;
+  realname: string;
+  surname: string;
+  nickname: string;
+  religion: string;
+  tel: string;
+  facebook: string;
+  lineID: string;
+  emergencyTel: string;
+  emergencyRelationship: string;
+  disease: string;
+  allergyMedicine: string;
+  usedMedicine: string;
+  foodRestriction: string;
+  disability: string;
+  imgURL: string;
 }

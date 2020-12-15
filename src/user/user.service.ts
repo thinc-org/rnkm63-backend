@@ -7,6 +7,10 @@ import googleStorage from '../utils/googleStorage';
 import { ConfigService } from '@nestjs/config';
 import crypto from 'crypto';
 import { postUserData } from './interface/user.interface';
+import {
+  generateRandomString,
+  generateRandomNumber,
+} from '../utility/function';
 
 @Injectable()
 export class UserService {
@@ -26,32 +30,8 @@ export class UserService {
   async getAllUser(): Promise<User[]> {
     return await this.userRepository.find();
   }
-
   //Begin For Test Only Section
   async generateUser(): Promise<User> {
-    const generateRandomString = (
-      len: number,
-      excludeNumber: boolean = false,
-    ): string => {
-      let availableString: string =
-        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let generateString: string = '';
-      for (let i = 0; i < len; i++)
-        generateString +=
-          availableString[
-            Math.floor(
-              Math.random() *
-                (availableString.length - (excludeNumber ? 10 : 0)),
-            )
-          ];
-      return generateString;
-    };
-    const generateRandomNumber = (len: number): string => {
-      let generateString: string = '';
-      for (let i = 0; i < len; i++)
-        generateString += Math.floor(Math.random() * 10).toString();
-      return generateString;
-    };
     const prefixName = ['นาย', 'นาง', 'นางสาว'];
     const religion = ['พุทธ', 'คริส', 'อิสลาม'];
 
