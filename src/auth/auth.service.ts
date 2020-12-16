@@ -37,17 +37,18 @@ export class AuthService {
       clearTimeout(timeout);
       return user.data.ouid;
     } catch (error) {
-      if (error.response.status === 401) {
+      if (error?.response?.status === 401) {
         throw new HttpException(
           'Ticket Not Verified',
           HttpStatus.UNPROCESSABLE_ENTITY,
         );
-      } else if (error.response.status === 403) {
+      } else if (error?.response?.status === 403) {
         throw new HttpException(
           'Too Many Requests',
           HttpStatus.TOO_MANY_REQUESTS,
         );
       } else {
+        console.log('Chula SSO Error', error.response?.data);
         throw new HttpException(
           "Can't connect to Chula SSO",
           HttpStatus.INTERNAL_SERVER_ERROR,
