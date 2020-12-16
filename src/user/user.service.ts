@@ -102,6 +102,8 @@ export class UserService {
     userData.emergencyTelRelationship = '';
     userData.facebook = 'www.facebook.com/' + generateRandomString(8);
     userData.lineID = generateRandomString(8);
+    userData.imgURL =
+      'https://media.discordapp.net/attachments/780977351428931594/784451408275046460/ElL3lTKVkAA2CmN.png';
     if (mode > 0) {
       user.data = userData;
       user.isNameWrong = mode % 2 == 1 && mode < 4;
@@ -118,8 +120,6 @@ export class UserService {
     user.isTransfer = false;
     user.currentBaan = Math.floor(Math.random() * 36);
     user.preferBaan = null;
-    user.imgURL =
-      'https://media.discordapp.net/attachments/780977351428931594/784451408275046460/ElL3lTKVkAA2CmN.png';
     return user;
   }
   //End For Test Only Section

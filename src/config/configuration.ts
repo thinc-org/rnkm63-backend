@@ -23,6 +23,6 @@ export default () => ({
   inDev: process.env.IN_DEV,
   cors: {
     origin: process.env.CORS_ORIGIN || '*',
-    use: process.env.USE_CORS == 'true' || true,
+    use: process.env.USE_CORS === 'true' || false,
   },
 });
