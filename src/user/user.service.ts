@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { GenerateSignedPostPolicyV4Options } from '@google-cloud/storage';
@@ -64,7 +64,7 @@ export class UserService {
     let user = await this.userRepository.findOne({ uid: uid });
     const isInDB = typeof user === 'undefined' ? false : true;
 
-    if (isInDB === false) {
+    if (!isInDB) {
       user = new User();
       user.uid = uid;
       user.isNameWrong = false;
@@ -75,10 +75,12 @@ export class UserService {
       user.isTransfer = false;
       user.currentBaan = 0;
       user.preferBaan = null;
+    } else if (user.isConfirm) {
+      throw new HttpException('Already confirmed', HttpStatus.CONFLICT);
     }
 
     if (!isInDB || confirmUserDTO.edit) {
-      let userData: UserData = confirmUserDTO.data;
+      const userData: UserData = confirmUserDTO.data;
       user.prefixname = userData.prefixname;
       user.realname = userData.realname;
       user.surname = userData.surname;
