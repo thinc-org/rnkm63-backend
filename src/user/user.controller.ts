@@ -1,8 +1,18 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  Param,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { ConfirmUserDTO, UserData } from './dto/create-user.dto';
 import { MockUserDTO } from './dto/mock.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('user')
 @Controller('user')
@@ -10,14 +20,22 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get('profile')
-  getProfile(): string {
-    return this.userService.getProfile();
+  @UseGuards(JwtAuthGuard)
+  getProfile(@Req() req) {
+    return this.userService.getProfile(req.user.uid);
   }
 
   @Post('profile')
   postProfile(@Body() confirmUserDTO: ConfirmUserDTO): string {
     return this.userService.postProfile(confirmUserDTO);
   }
+
+  //Begin For Test Only Section
+  // @Get('user')
+  // @UseGuards(JwtAuthGuard)
+  // getUser(@Req() req) {
+  //   return req.user;
+  // }
 
   @Get('getAllUser')
   getAllUser() {
@@ -47,4 +65,10 @@ export class UserController {
   getMockData(@Query() query: MockUserDTO) {
     return this.userService.mockUser(query.mode);
   }
+
+  @Get(':id')
+  findUser(@Param() params) {
+    return this.userService.findUser(params.id);
+  }
+  //End For Test Only Section
 }

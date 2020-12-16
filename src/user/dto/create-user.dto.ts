@@ -13,7 +13,6 @@ export class ReturnUserDTO {
   isTransfer: boolean;
   currentBaan: number;
   preferBaan: number | null;
-  imgURL: string;
 }
 
 export class UserData {
