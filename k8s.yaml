@@ -95,6 +95,8 @@ spec:
                 secretKeyRef:
                   name: backend-secrets
                   key: jwt_secret
+            - name: JWT_EXPIRES
+              value: 1d
 
             # GCS credentials
             - name: KEY_FILE_PATH
