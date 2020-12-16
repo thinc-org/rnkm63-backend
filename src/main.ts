@@ -28,7 +28,12 @@ async function bootstrap() {
 
   app.use(cookieParser());
 
-  app.enableCors();
+  if (configService.get('cors.use')) {
+    app.enableCors({
+      origin: configService.get('cors.origin'),
+      credentials: true,
+    });
+  }
 
   await app.listen(configService.get('port'));
 }
