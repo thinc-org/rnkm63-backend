@@ -33,6 +33,7 @@ export class UserService {
             nickname: user.nickname,
             religion: user.religion,
             disease: user.disease,
+            allergy: user.allergy,
             allergyMedicine: user.allergyMedicine,
             usedMedicine: user.usedMedicine,
             foodRestriction: user.foodRestriction,
@@ -87,6 +88,7 @@ export class UserService {
       user.nickname = userData.nickname;
       user.religion = userData.religion;
       user.disease = userData.disease;
+      user.allergy = userData.allergy;
       user.allergyMedicine = userData.allergyMedicine;
       user.usedMedicine = userData.usedMedicine;
       user.foodRestriction = userData.foodRestriction;
@@ -156,6 +158,7 @@ export class UserService {
     user.nickname = 'nickname-' + generateRandomString(4, true).toLowerCase();
     user.religion = religion[Math.floor(Math.random() * religion.length)];
     user.disease = '';
+    user.allergy = '';
     user.allergyMedicine = '';
     user.usedMedicine = '';
     user.foodRestriction = '';
@@ -203,6 +206,7 @@ export class UserService {
       'nickname-' + generateRandomString(4, true).toLowerCase();
     userData.religion = religion[Math.floor(Math.random() * religion.length)];
     userData.disease = '';
+    userData.allergy = '';
     userData.allergyMedicine = '';
     userData.usedMedicine = '';
     userData.foodRestriction = '';

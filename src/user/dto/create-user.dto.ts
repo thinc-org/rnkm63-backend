@@ -27,6 +27,7 @@ export class UserData {
   emergencyTel: string;
   emergencyTelRelationship: string;
   disease: string;
+  allergy: string;
   allergyMedicine: string;
   usedMedicine: string;
   foodRestriction: string;
