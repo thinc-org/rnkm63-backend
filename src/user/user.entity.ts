@@ -36,7 +36,7 @@ export class User {
   foodRestriction: string | null;
 
   @Column({ nullable: true })
-  disablity: string | null;
+  disability: string | null;
 
   @Column()
   tel: string;
