@@ -114,6 +114,12 @@ spec:
                 secretKeyRef:
                   name: backend-secrets
                   key: img_file_name_secret
+
+            # CORS
+            - name: USE_CORS
+              value: 'true'
+            - name: CORS_ORIGIN
+              value: 'http://localhost:3000'
           volumeMounts:
             - name: secrets
               mountPath: '/etc/secrets'
