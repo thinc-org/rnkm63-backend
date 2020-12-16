@@ -118,7 +118,8 @@ export class UserService {
     user.isTransfer = false;
     user.currentBaan = Math.floor(Math.random() * 36);
     user.preferBaan = null;
-    user.imgURL = '';
+    user.imgURL =
+      'https://media.discordapp.net/attachments/780977351428931594/784451408275046460/ElL3lTKVkAA2CmN.png';
     return user;
   }
   //End For Test Only Section
