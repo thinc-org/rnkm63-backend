@@ -13,6 +13,7 @@ export default () => ({
     appSecret: process.env.SSO_APPSECRET,
   },
   jwt: { secret: process.env.JWT_SECRET, expires: process.env.JWT_EXPIRES },
+  cookie: { secure: process.env.COOKIE_SECURE !== 'false' },
   gcs: {
     keyFileName: process.env.KEY_FILE_PATH,
     projectID: process.env.PROJECT_ID,
