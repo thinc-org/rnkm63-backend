@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
-import { ConfirmUserDTO, UserData } from './dto/create-user.dto';
+import { ConfirmUserDTO, UserData, ReturnUserDTO } from './dto/create-user.dto';
 import { MockUserDTO } from './dto/mock.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
@@ -21,13 +21,17 @@ export class UserController {
 
   @Get('profile')
   @UseGuards(JwtAuthGuard)
-  getProfile(@Req() req) {
-    return this.userService.getProfile(req.user.uid);
+  async getProfile(@Req() req): Promise<ReturnUserDTO> {
+    return await this.userService.getProfile(req.user.uid);
   }
 
   @Post('profile')
-  postProfile(@Body() confirmUserDTO: ConfirmUserDTO): string {
-    return this.userService.postProfile(confirmUserDTO);
+  @UseGuards(JwtAuthGuard)
+  async postProfile(
+    @Req() req,
+    @Body() confirmUserDTO: ConfirmUserDTO,
+  ): Promise<string> {
+    return await this.userService.postProfile(req.user.uid, confirmUserDTO);
   }
 
   //Begin For Test Only Section
