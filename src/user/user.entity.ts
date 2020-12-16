@@ -27,6 +27,9 @@ export class User {
   disease: string | null;
 
   @Column({ nullable: true })
+  allergy: string | null;
+
+  @Column({ nullable: true })
   allergyMedicine: string | null;
 
   @Column({ nullable: true })
