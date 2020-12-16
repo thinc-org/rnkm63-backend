@@ -21,4 +21,8 @@ export default () => ({
   },
   jwtSecret: process.env.JWT_SECRET,
   inDev: process.env.IN_DEV,
+  cors: {
+    origin: process.env.CORS_ORIGIN || '*',
+    use: process.env.USE_CORS == 'true' || true,
+  },
 });
