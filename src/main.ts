@@ -23,6 +23,8 @@ async function bootstrap() {
 
   app.use(cookieParser());
 
+  app.enableCors();
+
   await app.listen(configService.get('port'));
 }
 bootstrap();
