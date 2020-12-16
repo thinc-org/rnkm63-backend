@@ -54,7 +54,7 @@ export class AuthController {
   }
 
   @Get('user')
-  @UseGuards(HeaderGuard)
+  // @UseGuards(HeaderGuard)
   @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: 'Get User Uid',
