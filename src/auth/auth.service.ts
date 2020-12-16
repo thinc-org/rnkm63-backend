@@ -70,7 +70,10 @@ export class AuthService {
       throw new HttpException('Only Freshmen', HttpStatus.FORBIDDEN);
     }
     const token = this.jwtService.sign({ uid: uid });
-    res.cookie('token', token);
+    res.cookie('token', token, {
+      httpOnly: false,
+      secure: this.configService.get<boolean>('cookie.secure'),
+    });
     return { message: 'Ticket verify' };
   }
 
