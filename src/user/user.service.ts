@@ -21,41 +21,84 @@ export class UserService {
   ) {}
 
   async getProfile(uid: string): Promise<ReturnUserDTO> {
-    let userData = await this.findUser(uid);
+    const user = await this.userRepository.findOne({ uid: uid });
+    const isInDB = typeof user === 'undefined' ? false : true;
+
     const responseData: ReturnUserDTO = {
-      data: {
-        prefixname: userData.prefixname,
-        realname: userData.realname,
-        surname: userData.surname,
-        nickname: userData.nickname,
-        religion: userData.religion,
-        disease: userData.disease,
-        allergyMedicine: userData.allergyMedicine,
-        usedMedicine: userData.usedMedicine,
-        foodRestriction: userData.foodRestriction,
-        disability: userData.disability,
-        tel: userData.tel,
-        emergencyTel: userData.emergencyTel,
-        emergencyTelRelationship: userData.emergencyTelRelationship,
-        facebook: userData.facebook,
-        lineID: userData.lineID,
-        imgURL: userData.imgURL,
-      },
-      isNameWrong: userData.isNameWrong,
-      isImgWrong: userData.isImgWrong,
-      reason: userData.reason,
-      isQualified: userData.isQualified,
-      isConfirm: userData.isConfirm,
-      isTransfer: userData.isTransfer,
-      currentBaan: userData.currentBaan,
-      preferBaan: userData.preferBaan,
+      data: isInDB
+        ? {
+            prefixname: user.prefixname,
+            realname: user.realname,
+            surname: user.surname,
+            nickname: user.nickname,
+            religion: user.religion,
+            disease: user.disease,
+            allergyMedicine: user.allergyMedicine,
+            usedMedicine: user.usedMedicine,
+            foodRestriction: user.foodRestriction,
+            disability: user.disability,
+            tel: user.tel,
+            emergencyTel: user.emergencyTel,
+            emergencyTelRelationship: user.emergencyTelRelationship,
+            facebook: user.facebook,
+            lineID: user.lineID,
+            imgURL: user.imgURL,
+          }
+        : null,
+      isNameWrong: isInDB ? user.isNameWrong : false,
+      isImgWrong: isInDB ? user.isImgWrong : false,
+      reason: isInDB ? user.reason : null,
+      isQualified: isInDB ? user.isQualified : false,
+      isConfirm: isInDB ? user.isConfirm : false,
+      isTransfer: isInDB ? user.isTransfer : false,
+      currentBaan: isInDB ? user.currentBaan : 0,
+      preferBaan: isInDB ? user.preferBaan : null,
     };
     return responseData;
   }
-  postProfile(confirmUserDTO: ConfirmUserDTO): string {
-    return 'update';
-    //not done
-    //post dat
+
+  async postProfile(
+    uid: string,
+    confirmUserDTO: ConfirmUserDTO,
+  ): Promise<string> {
+    let user = await this.userRepository.findOne({ uid: uid });
+    const isInDB = typeof user === 'undefined' ? false : true;
+
+    if (isInDB === false) {
+      user = new User();
+      user.uid = uid;
+      user.isNameWrong = false;
+      user.isImgWrong = false;
+      user.reason = null;
+      user.editRound = 0;
+      user.isQualified = false;
+      user.isTransfer = false;
+      user.currentBaan = 0;
+      user.preferBaan = null;
+    }
+
+    if (!isInDB || confirmUserDTO.edit) {
+      let userData: UserData = confirmUserDTO.data;
+      user.prefixname = userData.prefixname;
+      user.realname = userData.realname;
+      user.surname = userData.surname;
+      user.nickname = userData.nickname;
+      user.religion = userData.religion;
+      user.disease = userData.disease;
+      user.allergyMedicine = userData.allergyMedicine;
+      user.usedMedicine = userData.usedMedicine;
+      user.foodRestriction = userData.foodRestriction;
+      user.disability = userData.disability;
+      user.tel = userData.tel;
+      user.emergencyTel = userData.emergencyTel;
+      user.emergencyTelRelationship = userData.emergencyTelRelationship;
+      user.facebook = userData.facebook;
+      user.lineID = userData.lineID;
+      user.imgURL = userData.imgURL;
+    }
+    user.isConfirm = true;
+    await this.userRepository.save(user);
+    return 'Success';
   }
 
   //Begin For Test Only Section
