@@ -38,6 +38,7 @@
     "crypto": "^1.0.1",
     "husky": "^4.3.5",
     "lint-staged": "^10.5.3",
+    "p-memoize": "^4.0.1",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",

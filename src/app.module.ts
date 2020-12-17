@@ -11,6 +11,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { BaanModule } from './baan/baan.module';
+import { GlobalModule } from './global/global.module';
 import { LoggerModule } from './logger/logger.module';
 import { LoggerMiddleware } from './logger/logger.middleware';
 import configuration from './config/configuration';
@@ -38,6 +39,7 @@ import configuration from './config/configuration';
     AuthModule,
     UserModule,
     BaanModule,
+    GlobalModule,
     LoggerModule,
   ],
   controllers: [AppController],
