@@ -4,9 +4,10 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
 import { ConfigService } from '@nestjs/config';
 import * as SwaggerStats from 'swagger-stats';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.setGlobalPrefix('api');
 
   const configService = app.get(ConfigService);
@@ -21,7 +22,9 @@ async function bootstrap() {
     .addTag('misc')
     .build();
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('api', app, document);
+  if (configService.get('inDev')) {
+    SwaggerModule.setup('api', app, document);
+  }
 
   //Swagger-stats
   app.use(SwaggerStats.getMiddleware({ swaggerSpec: document }));
@@ -34,6 +37,8 @@ async function bootstrap() {
       credentials: true,
     });
   }
+
+  app.set('trust proxy', 1);
 
   await app.listen(configService.get('port'));
 }
