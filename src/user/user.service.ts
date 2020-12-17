@@ -77,7 +77,6 @@ export class UserService {
   ): Promise<string> {
     let user = await this.userRepository.findOne({ uid: uid });
     const isInDB = typeof user === 'undefined' ? false : true;
-    const faculty = this.getUserFaculty(uid);
 
     if (!isInDB) {
       user = new User();

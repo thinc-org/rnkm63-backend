@@ -6,7 +6,7 @@ import { Global } from './global.entity';
 @Injectable()
 export class GlobalService {
   private cacheGlobalConfig: Global = null;
-  private cacheTimeStamp: number = 0;
+  private cacheTimeStamp = 0;
 
   constructor(
     @InjectRepository(Global)
