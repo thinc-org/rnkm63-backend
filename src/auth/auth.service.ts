@@ -71,7 +71,7 @@ export class AuthService {
     }
     const token = this.jwtService.sign({ uid: uid });
     res.cookie('token', token, {
-      httpOnly: true,
+      // httpOnly: true,
       // secure: this.configService.get<boolean>('cookie.secure'),
     });
     return { message: 'Ticket verify' };
