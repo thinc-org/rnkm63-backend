@@ -8,5 +8,6 @@ import { GlobalController } from './global.controller';
   imports: [TypeOrmModule.forFeature([Global])],
   providers: [GlobalService],
   controllers: [GlobalController],
+  exports: [GlobalService],
 })
 export class GlobalModule {}

@@ -16,6 +16,8 @@ export class ReturnUserDTO {
 }
 
 export class UserData {
+  facultyEn: string;
+  facultyTh: string;
   prefixname: string;
   realname: string;
   surname: string;
