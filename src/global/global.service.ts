@@ -14,7 +14,6 @@ export class GlobalService {
   ) {}
 
   async createGlobal(): Promise<Global> {
-    console.log('Create Global Config ' + new Date());
     const global = new Global();
 
     global.isDown = false;
@@ -27,7 +26,6 @@ export class GlobalService {
 
   async getGlobal(): Promise<Global> {
     if (new Date().getTime() - this.cacheTimeStamp >= 10000) {
-      console.log('Load Config From DB ' + new Date());
       this.cacheTimeStamp = new Date().getTime();
       const globalConfig = await this.globalRepository.findOne(1);
       if (typeof globalConfig === 'undefined')
