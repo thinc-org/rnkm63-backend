@@ -12,6 +12,13 @@ export default () => ({
     appId: process.env.SSO_APPID,
     appSecret: process.env.SSO_APPSECRET,
   },
+  influxdb: {
+    url: process.env.INFLUXDB_URL,
+    org: process.env.INFLUXDB_ORG,
+    bucket: process.env.INFLUXDB_BUCKET,
+    token: process.env.INFLUXDB_TOKEN,
+    password: process.env.INFLUXDB_PASSWORD,
+  },
   jwt: { secret: process.env.JWT_SECRET, expires: process.env.JWT_EXPIRES },
   cookie: { secure: process.env.COOKIE_SECURE !== 'false' },
   gcs: {
