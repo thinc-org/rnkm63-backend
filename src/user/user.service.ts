@@ -11,6 +11,7 @@ import {
   generateRandomString,
   generateRandomNumber,
 } from '../utility/function';
+import { facultyList } from '../utility/facultyList';
 
 @Injectable()
 export class UserService {
@@ -20,13 +21,22 @@ export class UserService {
     private configService: ConfigService,
   ) {}
 
+  getUserFaculty(uid: string) {
+    const facultyID = uid.slice(uid.length - 2);
+
+    return facultyList[facultyID];
+  }
+
   async getProfile(uid: string): Promise<ReturnUserDTO> {
     const user = await this.userRepository.findOne({ uid: uid });
     const isInDB = typeof user === 'undefined' ? false : true;
+    const faculty = this.getUserFaculty(uid);
 
     const responseData: ReturnUserDTO = {
       data: isInDB
         ? {
+            facultyEn: faculty.facultyEn,
+            facultyTh: faculty.facultyTh,
             prefixname: user.prefixname,
             realname: user.realname,
             surname: user.surname,
@@ -64,6 +74,7 @@ export class UserService {
   ): Promise<string> {
     let user = await this.userRepository.findOne({ uid: uid });
     const isInDB = typeof user === 'undefined' ? false : true;
+    const faculty = this.getUserFaculty(uid);
 
     if (!isInDB) {
       user = new User();
@@ -149,9 +160,13 @@ export class UserService {
       'RNS',
     ];
     const randomPeopleType = Math.floor(Math.random() * 5);
+    const facultyIDList = Object.keys(facultyList);
 
     const user = new User();
-    user.uid = '633' + generateRandomNumber(7);
+    user.uid =
+      '633' +
+      generateRandomNumber(5) +
+      facultyIDList[Math.floor(Math.random() * facultyIDList.length)];
     user.prefixname = prefixName[Math.floor(Math.random() * prefixName.length)];
     user.realname = 'realname-' + generateRandomString(6, true).toLowerCase();
     user.surname = 'surname-' + generateRandomString(6, true).toLowerCase();
