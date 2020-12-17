@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Query,
-  Req,
-  Res,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Query, Req, Res, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
   ApiBadRequestResponse,
@@ -22,7 +13,6 @@ import {
 } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { AuthTicketDto } from './dto/auth-ticket.dto';
-import { TokenDto } from './dto/token.dto';
 import { HeaderGuard } from './header.guard';
 import { JwtAuthGuard } from './jwt-auth.guard';
 

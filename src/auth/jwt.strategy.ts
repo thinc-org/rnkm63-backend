@@ -4,8 +4,8 @@ import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
 import { JwtDto } from './dto/jwt.dto';
 
-var cookieExtractor = function(req) {
-  var token = null;
+const cookieExtractor = function(req) {
+  let token = null;
   if (req && req.cookies) {
     token = req.cookies['token'];
   }

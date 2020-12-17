@@ -1,10 +1,10 @@
 export function generateRandomString(
   len: number,
-  excludeNumber: boolean = false,
+  excludeNumber = false,
 ): string {
-  let availableString: string =
+  const availableString =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let generatedString: string = '';
+  let generatedString = '';
   for (let i = 0; i < len; i++)
     generatedString +=
       availableString[
@@ -15,7 +15,7 @@ export function generateRandomString(
   return generatedString;
 }
 export function generateRandomNumber(len: number): string {
-  let generatedString: string = '';
+  let generatedString = '';
   for (let i = 0; i < len; i++)
     generatedString += Math.floor(Math.random() * 10).toString();
   return generatedString;

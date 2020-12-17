@@ -8,7 +8,6 @@ import { ConfigService } from '@nestjs/config';
 import { Response } from 'express';
 import axios from 'axios';
 import { JwtService } from '@nestjs/jwt';
-import { TokenDto } from './dto/token.dto';
 
 @Injectable()
 export class AuthService {

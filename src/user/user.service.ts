@@ -115,11 +115,11 @@ export class UserService {
   generateUser(): Promise<User> {
     const generateRandomString = (
       len: number,
-      excludeNumber: boolean = false,
+      excludeNumber = false,
     ): string => {
-      let availableString: string =
+      const availableString =
         'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let generateString: string = '';
+      let generateString = '';
       for (let i = 0; i < len; i++)
         generateString +=
           availableString[
@@ -131,7 +131,7 @@ export class UserService {
       return generateString;
     };
     const generateRandomNumber = (len: number): string => {
-      let generateString: string = '';
+      let generateString = '';
       for (let i = 0; i < len; i++)
         generateString += Math.floor(Math.random() * 10).toString();
       return generateString;

@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 
 class googleStorage {
   storage: Storage;
-  bucketName: String;
+  bucketName: string;
   bucket: Bucket;
   constructor(private configService: ConfigService) {
     const bucketName = this.configService.get<string>('gcs.bucketName');
