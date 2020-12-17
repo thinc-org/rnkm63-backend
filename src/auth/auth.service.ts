@@ -73,7 +73,6 @@ export class AuthService {
     res.cookie('token', token, {
       // httpOnly: true,
       // secure: this.configService.get<boolean>('cookie.secure'),
-      sameSite: 'none',
     });
     return { message: 'Ticket verify' };
   }
