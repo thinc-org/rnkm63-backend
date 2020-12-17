@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: 'rnkm63-backend'
-          image: 'gcr.io/rnkm63/backend:latest'
+          image: 'gcr.io/rnkm63/backend:dev'
           env:
             # App port
             - name: PORT
@@ -96,7 +96,7 @@ spec:
                   name: backend-secrets
                   key: jwt_secret
             - name: JWT_EXPIRES
-              value: 1d
+              value: 7d
 
             # Cookie Secure
             - name: COOKIE_SECURE
@@ -126,6 +126,10 @@ spec:
               value: 'true'
             - name: CORS_ORIGIN
               value: 'http://localhost:3000'
+
+            # Enable Swagger UI
+            - name: IN_DEV
+              value: 'true'
           volumeMounts:
             - name: secrets
               mountPath: '/etc/secrets'

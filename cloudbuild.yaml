@@ -9,8 +9,8 @@ steps:
   - name: 'gcr.io/cloud-builders/gke-deploy'
     args:
       - run
-      - --filename=k8s.yaml
+      - --filename=k8s-$BRANCH_NAME.yaml
       - --image=gcr.io/rnkm63/backend:$BRANCH_NAME
       - --location=asia-southeast1-b
       - --cluster=rnkm63
-      - --namespace=dev
+      - --namespace=$BRANCH_NAME
