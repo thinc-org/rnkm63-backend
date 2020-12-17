@@ -5,3 +5,8 @@ export type RequestWithUserID = Request & {
     uid: string;
   };
 };
+
+export interface FacultyName {
+  facultyEn: string;
+  facultyTh: string;
+}

@@ -10,9 +10,9 @@ export class GlobalMiddleware implements NestMiddleware {
     const globalConfig = await this.globalService.getGlobal();
 
     if (globalConfig.isDown) {
-      res.statusCode = HttpStatus.SERVICE_UNAVAILABLE;
+      res.statusCode = HttpStatus.FORBIDDEN;
       res.json({
-        statusCode: HttpStatus.SERVICE_UNAVAILABLE,
+        statusCode: HttpStatus.FORBIDDEN,
         downReasonEn: globalConfig.downReasonEn,
         downReasonTh: globalConfig.downReasonTh,
       });
