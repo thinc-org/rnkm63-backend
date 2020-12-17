@@ -5,7 +5,7 @@ import { GenerateSignedPostPolicyV4Options } from '@google-cloud/storage';
 import { User } from './user.entity';
 import googleStorage from '../utils/googleStorage';
 import { ConfigService } from '@nestjs/config';
-import crypto from 'crypto';
+const crypto = require('crypto');
 
 @Injectable()
 export class UserService {
