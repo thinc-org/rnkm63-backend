@@ -13,6 +13,7 @@ import {
 } from '../utility/function';
 import { facultyList } from '../utility/facultyList';
 import { FacultyName } from '../utility/type';
+import { GlobalService } from '../global/global.service';
 
 @Injectable()
 export class UserService {
@@ -20,6 +21,7 @@ export class UserService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
     private configService: ConfigService,
+    private globalService: GlobalService,
   ) {}
 
   getUserFaculty(uid: string): FacultyName {
@@ -83,11 +85,12 @@ export class UserService {
       user.isNameWrong = false;
       user.isImgWrong = false;
       user.reason = null;
-      user.editRound = 0;
+      user.editPhase = 0;
       user.isQualified = false;
       user.isTransfer = false;
       user.currentBaan = 0;
       user.preferBaan = null;
+      user.requestedBaanChange = false;
     } else if (user.isConfirm) {
       throw new HttpException('Already confirmed', HttpStatus.CONFLICT);
     }
@@ -111,6 +114,7 @@ export class UserService {
       user.facebook = userData.facebook;
       user.lineID = userData.lineID;
       user.imgURL = userData.imgURL;
+      user.editPhase = (await this.globalService.getGlobal()).phaseCount;
     }
     user.isConfirm = true;
     await this.userRepository.save(user);
@@ -189,12 +193,13 @@ export class UserService {
     user.reason = [3, 4].includes(randomPeopleType)
       ? 'There is a reason'
       : null;
-    user.editRound = 0;
+    user.editPhase = 0;
     user.isQualified = [3].includes(randomPeopleType) ? true : false;
     user.isConfirm = [4].includes(randomPeopleType) ? true : false;
     user.isTransfer = false;
     user.currentBaan = Math.floor(Math.random() * 36);
     user.preferBaan = null;
+    user.requestedBaanChange = false;
     user.imgURL = '';
     return this.userRepository.save(user);
   }
