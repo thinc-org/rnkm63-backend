@@ -19,8 +19,8 @@ export class GlobalService {
     global.isDown = false;
     global.downReasonEn = null;
     global.downReasonTh = null;
-    global.roundCount = 0;
-    global.phaseCount = 0;
+    global.roundCount = 1;
+    global.phaseCount = 1;
     return await this.globalRepository.save(global);
   }
 

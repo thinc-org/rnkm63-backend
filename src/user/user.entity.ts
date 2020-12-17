@@ -66,7 +66,7 @@ export class User {
   reason: string | null;
 
   @Column()
-  editRound: number;
+  editPhase: number;
 
   @Column()
   isQualified: boolean;
@@ -82,6 +82,9 @@ export class User {
 
   @Column({ nullable: true })
   preferBaan: number | null;
+
+  @Column()
+  requestedBaanChange: boolean;
 
   @Column()
   imgURL: string;
