@@ -11,7 +11,7 @@ import { LoggerService, Logger } from './logger.service';
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
   constructor(
-    //readonly authService: AuthService,      //<------------- something wrong
+    readonly authService: AuthService, //<------------- something wrong
     readonly loggerService: LoggerService, //<-------------- something wrong
   ) {}
   generateRequestID() {
