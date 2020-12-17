@@ -5,7 +5,7 @@ import { GenerateSignedPostPolicyV4Options } from '@google-cloud/storage';
 import { User } from './user.entity';
 import googleStorage from '../utils/googleStorage';
 import { ConfigService } from '@nestjs/config';
-import crypto from 'crypto';
+import { createHash } from 'crypto';
 import { ConfirmUserDTO, ReturnUserDTO, UserData } from './dto/create-user.dto';
 import {
   generateRandomString,
@@ -236,8 +236,7 @@ export class UserService {
 
   getImgFileName(ouid: string): string {
     const secret = this.configService.get<string>('gcs.secret');
-    const fileName = `profilepics/n-baan/${ouid}-${crypto
-      .createHash('sha256')
+    const fileName = `profilepics/n-baan/${ouid}-${createHash('sha256')
       .update(`${ouid}${secret}`)
       .digest('hex')}.jpg`;
     return fileName;
