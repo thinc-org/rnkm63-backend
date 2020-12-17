@@ -12,6 +12,7 @@ import {
   generateRandomNumber,
 } from '../utility/function';
 import { facultyList } from '../utility/facultyList';
+import { FacultyName } from '../utility/type';
 
 @Injectable()
 export class UserService {
@@ -21,7 +22,7 @@ export class UserService {
     private configService: ConfigService,
   ) {}
 
-  getUserFaculty(uid: string) {
+  getUserFaculty(uid: string): FacultyName {
     const facultyID = uid.slice(uid.length - 2);
 
     return facultyList[facultyID];
