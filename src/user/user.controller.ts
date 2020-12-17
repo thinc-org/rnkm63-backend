@@ -27,15 +27,15 @@ export class UserController {
     return this.userService.generateUser();
   }
 
-  @Get()
+  @Get('getUploadPolicy')
   getUploadCred() {
     const ouid = 'userId';
     const fileName = this.userService.getImgFileName(ouid);
     return this.userService.getUploadCred(fileName);
   }
 
-  @Get('uploadFileName')
-  getUploadFileName() {
+  @Get('getUploadFileName')
+  getImgFileName() {
     const ouid = 'userId';
     return this.userService.getImgFileName(ouid);
   }
