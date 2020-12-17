@@ -115,7 +115,7 @@ spec:
                 secretKeyRef:
                   name: backend-secrets
                   key: gcs_bucket_name
-            - name: IMG_FILE_NAME_SECERET
+            - name: IMG_FILE_NAME_SECRET
               valueFrom:
                 secretKeyRef:
                   name: backend-secrets
