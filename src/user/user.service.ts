@@ -83,8 +83,7 @@ export class UserService {
       user.uid = uid;
       user.isNameWrong = false;
       user.isImgWrong = false;
-      user.reason = null;
-      user.editPhase = 0;
+      user.reason = '';
       user.isQualified = false;
       user.isTransfer = false;
       user.currentBaan = 0;
@@ -94,27 +93,33 @@ export class UserService {
       throw new HttpException('Already confirmed', HttpStatus.CONFLICT);
     }
 
-    if (!isInDB || confirmUserDTO.edit) {
-      const userData: UserData = confirmUserDTO.data;
-      user.prefixname = userData.prefixname;
-      user.realname = userData.realname;
-      user.surname = userData.surname;
-      user.nickname = userData.nickname;
-      user.religion = userData.religion;
-      user.disease = userData.disease;
-      user.allergy = userData.allergy;
-      user.allergyMedicine = userData.allergyMedicine;
-      user.usedMedicine = userData.usedMedicine;
-      user.foodRestriction = userData.foodRestriction;
-      user.disability = userData.disability;
-      user.tel = userData.tel;
-      user.emergencyTel = userData.emergencyTel;
-      user.emergencyTelRelationship = userData.emergencyTelRelationship;
-      user.facebook = userData.facebook;
-      user.lineID = userData.lineID;
-      user.imgURL = userData.imgURL;
+    const userData: UserData = confirmUserDTO.data;
+    const isNickNameMatch = isInDB && user.nickname === userData.nickname;
+    user.prefixname = userData.prefixname;
+    user.realname = userData.realname;
+    user.surname = userData.surname;
+    user.nickname = userData.nickname;
+    user.religion = userData.religion;
+    user.disease = userData.disease;
+    user.allergy = userData.allergy;
+    user.allergyMedicine = userData.allergyMedicine;
+    user.usedMedicine = userData.usedMedicine;
+    user.foodRestriction = userData.foodRestriction;
+    user.disability = userData.disability;
+    user.tel = userData.tel;
+    user.emergencyTel = userData.emergencyTel;
+    user.emergencyTelRelationship = userData.emergencyTelRelationship;
+    user.facebook = userData.facebook;
+    user.lineID = userData.lineID;
+    user.imgURL = userData.imgURL;
+    if (
+      !isInDB ||
+      user.isNameWrong ||
+      user.isImgWrong ||
+      !isNickNameMatch ||
+      confirmUserDTO.edit
+    )
       user.editPhase = (await this.globalService.getGlobal()).phaseCount;
-    }
     user.isConfirm = true;
     await this.userRepository.save(user);
     return 'Success';
@@ -153,7 +158,7 @@ export class UserService {
         generateString += Math.floor(Math.random() * 10).toString();
       return generateString;
     };
-    const prefixName = ['นาย', 'นาง', 'นางสาว'];
+    const prefixName = ['นาย', 'นางสาว'];
     const religion = [
       'buddhism',
       'christianity',
@@ -204,7 +209,7 @@ export class UserService {
   }
 
   mockUser(mode): ReturnUserDTO {
-    const prefixName = ['นาย', 'นาง', 'นางสาว'];
+    const prefixName = ['นาย', 'นางสาว'];
     const religion = [
       'buddhism',
       'christianity',
