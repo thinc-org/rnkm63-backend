@@ -8,7 +8,6 @@ import { Request, Response } from 'express';
 import { Error, LoggerService } from './logger.service';
 import { serializeError } from 'serialize-error';
 import { RequestWithID } from './logger.middleware';
-import { SimpleConsoleLogger } from 'typeorm';
 
 @Catch()
 export class LoggerFilter implements ExceptionFilter {
