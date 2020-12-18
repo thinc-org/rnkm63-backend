@@ -13,6 +13,8 @@ import { UserModule } from './user/user.module';
 import { BaanModule } from './baan/baan.module';
 import { LoggerModule } from './logger/logger.module';
 import { LoggerMiddleware } from './logger/logger.middleware';
+import { LoggerFilter } from './logger/logger.filter';
+import { APP_FILTER } from '@nestjs/core';
 import configuration from './config/configuration';
 
 @Module({
@@ -41,7 +43,13 @@ import configuration from './config/configuration';
     LoggerModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_FILTER,
+      useClass: LoggerFilter,
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

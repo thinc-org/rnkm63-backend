@@ -5,15 +5,11 @@ import {
   generateRandomNumber,
 } from '../utility/function';
 import { RequestWithUserID } from '../utility/type';
-import { AuthService } from '../auth/auth.service';
 import { LoggerService, Logger } from './logger.service';
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
-  constructor(
-    readonly authService: AuthService,
-    readonly loggerService: LoggerService,
-  ) {}
+  constructor(readonly loggerService: LoggerService) {}
   generateRequestID(req: Request, res: Response) {
     const str = generateRandomString(7);
     const num = generateRandomNumber(7);
