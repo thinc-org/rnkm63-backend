@@ -111,7 +111,7 @@ export class UserService {
     user.emergencyTelRelationship = userData.emergencyTelRelationship;
     user.facebook = userData.facebook;
     user.lineID = userData.lineID;
-    user.imgURL = userData.imgURL;
+    user.imgURL = ''; //this.getImgFileName(uid);
     if (
       !isInDB ||
       user.isNameWrong ||
@@ -123,6 +123,29 @@ export class UserService {
     user.isConfirm = true;
     await this.userRepository.save(user);
     return 'Success';
+  }
+
+  getImgFileName(ouid: string): string {
+    const secret = this.configService.get<string>('gcs.secret');
+    const fileName = `profilepics/n-baan/${ouid}-${createHash('sha256')
+      .update(`${ouid}${secret}`)
+      .digest('hex')}.jpg`;
+    return fileName;
+  }
+
+  async getUploadCred(fileName) {
+    const imgStorage = new googleStorage(this.configService);
+    const options: GenerateSignedPostPolicyV4Options = {
+      expires: new Date().getTime() + 5 * 60 * 1000,
+      conditions: [
+        ['eq', '$Content-Type', 'image/jpeg'],
+        ['content-length-range', 0, 300 * 1024],
+      ],
+    };
+    const cred = await imgStorage.bucket
+      .file(fileName)
+      .generateSignedPostPolicyV4(options);
+    return cred[0];
   }
 
   //Begin For Test Only Section
@@ -262,27 +285,4 @@ export class UserService {
     return user;
   }
   //End For Test Only Section
-
-  getImgFileName(ouid: string): string {
-    const secret = this.configService.get<string>('gcs.secret');
-    const fileName = `profilepics/n-baan/${ouid}-${createHash('sha256')
-      .update(`${ouid}${secret}`)
-      .digest('hex')}.jpg`;
-    return fileName;
-  }
-
-  async getUploadCred(fileName) {
-    const imgStorage = new googleStorage(this.configService);
-    const options: GenerateSignedPostPolicyV4Options = {
-      expires: new Date().getTime() + 5 * 60 * 1000,
-      conditions: [
-        ['eq', '$Content-Type', 'image/jpeg'],
-        ['content-length-range', 0, 300 * 1024],
-      ],
-    };
-    const cred = await imgStorage.bucket
-      .file(fileName)
-      .generateSignedPostPolicyV4(options);
-    return cred[0];
-  }
 }
