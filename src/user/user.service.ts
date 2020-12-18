@@ -245,10 +245,10 @@ export class UserService {
   async getUploadCred(fileName) {
     const imgStorage = new googleStorage(this.configService);
     const options: GenerateSignedPostPolicyV4Options = {
-      expires: new Date().getTime() + 10 * 60 * 1000,
+      expires: new Date().getTime() + 5 * 60 * 1000,
       conditions: [
         ['eq', '$Content-Type', 'image/jpeg'],
-        ['content-length-range', 0, 1024],
+        ['content-length-range', 300, 1024],
       ],
     };
     const cred = await imgStorage.bucket
