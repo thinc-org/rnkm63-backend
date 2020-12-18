@@ -248,7 +248,7 @@ export class UserService {
       expires: new Date().getTime() + 5 * 60 * 1000,
       conditions: [
         ['eq', '$Content-Type', 'image/jpeg'],
-        ['content-length-range', 300, 1024],
+        ['content-length-range', 0, 300 * 1024],
       ],
     };
     const cred = await imgStorage.bucket
