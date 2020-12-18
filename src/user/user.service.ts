@@ -138,6 +138,12 @@ export class UserService {
     uid: string,
     requestedBaanChangeDTO: RequestedBaanChangeDTO,
   ): Promise<string> {
+    if ((await this.globalService.getGlobal()).phaseCount < 2)
+      throw new HttpException(
+        'Global Phase Below Than 2',
+        HttpStatus.BAD_REQUEST,
+      );
+
     const user = await this.userRepository.findOne({ uid: uid });
     const preferBaanID = requestedBaanChangeDTO.preferBaan;
 
