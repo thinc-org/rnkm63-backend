@@ -51,7 +51,7 @@ export class AuthService {
         console.log(
           'Chula SSO Error',
           this.configService.get('sso.url') + '/serviceValidation',
-          error.response?.data,
+          error,
         );
         throw new HttpException(
           "Can't connect to Chula SSO",

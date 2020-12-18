@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { NestMiddleware, Injectable } from '@nestjs/common';
+import { NestMiddleware, Injectable, UseGuards } from '@nestjs/common';
 import {
   generateRandomString,
   generateRandomNumber,
@@ -11,49 +11,42 @@ import { LoggerService, Logger } from './logger.service';
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
   constructor(
-    readonly authService: AuthService, //<------------- something wrong
-    readonly loggerService: LoggerService, //<-------------- something wrong
+    readonly authService: AuthService,
+    readonly loggerService: LoggerService,
   ) {}
-  generateRequestID() {
+  generateRequestID(req: Request, res: Response) {
     const str = generateRandomString(7);
     const num = generateRandomNumber(7);
-    return str + num;
+    const reqID = str + num;
+    res.append('X-Request-ID', reqID);
+    (req as RequestWithID).reqid = reqID;
   }
-  requestVariable(req) {
+  extractVariable(req, res) {
     return {
-      timeRequest: Date.now(),
       ipAddress: req.ip,
-      //IDK why it can't get uid ----> always undefined
-      uid: req.user?.uid,
+      //IDK why it can't get uid ----> always undefined//
+      uid: (req as RequestWithUserID).user?.uid,
       method: req.method,
       path: req.originalUrl,
-      reqBody: JSON.stringify(req.body),
-    };
-  }
-  responseVariable(res) {
-    return {
-      end: Date.now(),
+      reqBody: req.body,
       status: res.statusCode,
     };
   }
-  use(req: RequestWithUserID, res: Response, next: NextFunction) {
-    const reqVar = this.requestVariable(req);
-    const resVar = this.responseVariable(res);
-    const result = {
-      ...reqVar,
-      //status always 200 wait to fix
-      status: resVar.status,
-      //I don't sure 'duration' is working right?
-      duration: resVar.end - reqVar.timeRequest,
-      reqID: this.generateRequestID(),
-    } as Logger;
-    console.log(result);
-    this.loggerService.addLog({
-      measurement: 'response',
-      fields: result,
-      tags: {},
+  use(req: Request, res: Response, next: () => void) {
+    this.generateRequestID(req, res);
+    const start = Date.now();
+    res.on('finish', () => {
+      const result = {
+        timeRequest: start,
+        ...this.extractVariable(req, res),
+        duration: Date.now() - start,
+        reqID: (req as RequestWithID).reqid,
+      } as Logger;
+      //console.log(result);
+      //console.log((req as RequestWithUserID).user);
+      this.loggerService.addLog(result);
     });
     next();
   }
 }
-export type RequestWithId = Request & { reqID: string };
+export type RequestWithID = Request & { reqid: string };

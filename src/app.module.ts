@@ -13,9 +13,6 @@ import { UserModule } from './user/user.module';
 import { BaanModule } from './baan/baan.module';
 import { LoggerModule } from './logger/logger.module';
 import { LoggerMiddleware } from './logger/logger.middleware';
-import { BaanController } from './baan/baan.controller';
-import { AuthController } from './auth/auth.controller';
-import { UserController } from './user/user.controller';
 import configuration from './config/configuration';
 
 @Module({
