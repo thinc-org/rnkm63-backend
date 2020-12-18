@@ -4,9 +4,10 @@ import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { User } from './user.entity';
 import { GlobalModule } from '../global/global.module';
+import { BaanModule } from '../baan/baan.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), GlobalModule],
+  imports: [TypeOrmModule.forFeature([User]), GlobalModule, BaanModule],
   providers: [UserService],
   controllers: [UserController],
 })

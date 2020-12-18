@@ -10,7 +10,11 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
-import { ConfirmUserDTO, ReturnUserDTO } from './dto/create-user.dto';
+import {
+  ConfirmUserDTO,
+  ReturnUserDTO,
+  RequestedBaanChangeDTO,
+} from './dto/create-user.dto';
 import { MockUserDTO } from './dto/mock.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RequestWithUserID } from '../utility/type';
@@ -33,6 +37,18 @@ export class UserController {
     @Body() confirmUserDTO: ConfirmUserDTO,
   ): Promise<string> {
     return await this.userService.postProfile(req.user.uid, confirmUserDTO);
+  }
+
+  @Post('requestedBaanChange')
+  @UseGuards(JwtAuthGuard)
+  async requestedBaanChange(
+    @Req() req: RequestWithUserID,
+    @Body() requestedBaanChangeDTO: RequestedBaanChangeDTO,
+  ): Promise<string> {
+    return await this.userService.requestedBaanChange(
+      req.user.uid,
+      requestedBaanChangeDTO,
+    );
   }
 
   //Begin For Test Only Section

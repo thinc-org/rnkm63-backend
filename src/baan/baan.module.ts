@@ -8,5 +8,6 @@ import { Baan } from './baan.entity';
   imports: [TypeOrmModule.forFeature([Baan])],
   providers: [BaanService],
   controllers: [BaanController],
+  exports: [BaanService],
 })
 export class BaanModule {}

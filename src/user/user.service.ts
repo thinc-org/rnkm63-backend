@@ -6,7 +6,12 @@ import { User } from './user.entity';
 import googleStorage from '../utils/googleStorage';
 import { ConfigService } from '@nestjs/config';
 import { createHash } from 'crypto';
-import { ConfirmUserDTO, ReturnUserDTO, UserData } from './dto/create-user.dto';
+import {
+  ConfirmUserDTO,
+  ReturnUserDTO,
+  UserData,
+  RequestedBaanChangeDTO,
+} from './dto/create-user.dto';
 import {
   generateRandomString,
   generateRandomNumber,
@@ -14,6 +19,7 @@ import {
 import { facultyList } from '../utility/facultyList';
 import { FacultyName } from '../utility/type';
 import { GlobalService } from '../global/global.service';
+import { BaanService } from '../baan/baan.service';
 
 @Injectable()
 export class UserService {
@@ -22,6 +28,7 @@ export class UserService {
     private userRepository: Repository<User>,
     private configService: ConfigService,
     private globalService: GlobalService,
+    private baanService: BaanService,
   ) {}
 
   getUserFaculty(uid: string): FacultyName {
@@ -125,6 +132,40 @@ export class UserService {
     user.isConfirm = true;
     await this.userRepository.save(user);
     return 'Success';
+  }
+
+  async requestedBaanChange(
+    uid: string,
+    requestedBaanChangeDTO: RequestedBaanChangeDTO,
+  ): Promise<string> {
+    const user = await this.userRepository.findOne({ uid: uid });
+    const preferBaanID = requestedBaanChangeDTO.preferBaan;
+
+    if (typeof user === 'undefined')
+      throw new HttpException('User Not Found', HttpStatus.BAD_REQUEST);
+    else if (user.isConfirm === false)
+      throw new HttpException('User Not Confirm', HttpStatus.BAD_REQUEST);
+    if (preferBaanID === null) {
+      user.preferBaan = null;
+      user.requestedBaanChange = false;
+      await this.userRepository.save(user);
+      return 'Cancel Requested Baan Change';
+    } else {
+      const preferBaanData = await this.baanService.findBaan(preferBaanID);
+      if (typeof preferBaanData === 'undefined')
+        throw new HttpException('Baan Not Found', HttpStatus.BAD_REQUEST);
+      else {
+        if (preferBaanData.id === user.currentBaan)
+          throw new HttpException(
+            'Cannot Prefer Current Baan',
+            HttpStatus.BAD_REQUEST,
+          );
+        user.preferBaan = preferBaanData.id;
+        user.requestedBaanChange = true;
+        await this.userRepository.save(user);
+        return `Current Baan ID: ${preferBaanData.id}`;
+      }
+    }
   }
 
   getImgFileName(ouid: string): string {

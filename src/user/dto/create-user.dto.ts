@@ -36,3 +36,7 @@ export class UserData {
   disability: string;
   imgURL: string;
 }
+
+export class RequestedBaanChangeDTO {
+  preferBaan: number | null;
+}
