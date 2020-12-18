@@ -56,7 +56,9 @@ export class UserService {
             emergencyTelRelationship: user.emergencyTelRelationship,
             facebook: user.facebook,
             lineID: user.lineID,
-            imgURL: user.imgURL,
+            imgURL:
+              'https://storage.googleapis.com/rnkm63-dev/' +
+              this.getImgFileName(uid),
           }
         : null,
       isNameWrong: isInDB ? user.isNameWrong : false,
