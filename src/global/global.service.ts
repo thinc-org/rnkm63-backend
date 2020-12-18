@@ -34,4 +34,8 @@ export class GlobalService {
     }
     return this.cacheGlobalConfig;
   }
+
+  async getGlobalRound(): Promise<number> {
+    return (await this.getGlobal()).roundCount;
+  }
 }
