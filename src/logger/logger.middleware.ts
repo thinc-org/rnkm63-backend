@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { NestMiddleware, Injectable } from '@nestjs/common';
 import { RequestWithUserID } from '../utility/type';
 import { LoggerService, Logger } from './logger.service';
-import { uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
