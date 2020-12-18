@@ -14,7 +14,7 @@ export class BaanService {
     return this.baanRepository.find();
   }
 
-  findBaan(baanID): Promise<Baan> {
-    return this.baanRepository.findOne({ id: baanID });
+  async findBaan(baanID: number): Promise<Baan> {
+    return await this.baanRepository.findOne(baanID);
   }
 }
