@@ -24,7 +24,6 @@ export class LoggerMiddleware implements NestMiddleware {
   extractVariable(req, res) {
     return {
       ipAddress: req.ip,
-      //IDK why it can't get uid ----> always undefined//
       uid: (req as RequestWithUserID).user?.uid,
       method: req.method,
       path: req.originalUrl,
@@ -42,8 +41,6 @@ export class LoggerMiddleware implements NestMiddleware {
         duration: Date.now() - start,
         reqID: (req as RequestWithID).reqid,
       } as Logger;
-      //console.log(result);
-      //console.log((req as RequestWithUserID).user);
       this.loggerService.addLog(result);
     });
     next();

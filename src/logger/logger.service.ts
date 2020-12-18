@@ -20,34 +20,6 @@ export class LoggerService implements OnModuleDestroy {
   onModuleDestroy() {
     this.writeApi.close();
   }
-
-  /*private connectDB(): Influx.InfluxDB {
-    const config: Influx.ISingleHostConfig = {
-      host: this.configService.get<string>('database.host'),
-      database: this.configService.get<string>('database.name') || 'mydb',
-      username: this.configService.get<string>('database.username'),
-      password: this.configService.get<string>('influxdb.password'),
-      schema: [
-        {
-          measurement: 'response',
-          fields: {
-            timeRequest: Influx.FieldType.INTEGER,
-            ipAddress: Influx.FieldType.STRING,
-            uid: Influx.FieldType.STRING,
-            method: Influx.FieldType.STRING,
-            path: Influx.FieldType.STRING,
-            reqBody: Influx.FieldType.STRING,
-            status: Influx.FieldType.STRING,
-            duration: Influx.FieldType.INTEGER,
-            reqID: Influx.FieldType.STRING,
-          },
-          tags: [],
-        },
-      ],
-    };
-    return new Influx.InfluxDB(config);
-  }*/
-
   private createPoints(log: Logger) {
     const points = new Point('request')
       .intField('timeRequest', log.timeRequest)
