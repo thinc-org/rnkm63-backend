@@ -45,12 +45,10 @@ export class LoggerService implements OnModuleDestroy {
   addLog(log: Logger) {
     const point = this.createPoints(log);
     this.writeApi.writePoint(point);
-    //console.log(point);
   }
   addError(error: Error) {
     const point = this.createErrorPoints(error);
     this.writeApi.writePoint(point);
-    //console.log(point);
   }
 }
 export interface Error {
