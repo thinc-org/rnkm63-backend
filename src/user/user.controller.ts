@@ -53,15 +53,17 @@ export class UserController {
   }
 
   @Get('getUploadPolicy')
-  getUploadCred() {
-    const ouid = 'userId';
+  @UseGuards(JwtAuthGuard)
+  getUploadCred(@Req() req: RequestWithUserID) {
+    const ouid = req.user.uid;
     const fileName = this.userService.getImgFileName(ouid);
     return this.userService.getUploadCred(fileName);
   }
 
   @Get('getUploadFileName')
-  getUploadFileName() {
-    const ouid = 'userId';
+  @UseGuards(JwtAuthGuard)
+  getUploadFileName(@Req() req: RequestWithUserID) {
+    const ouid = req.user.uid;
     return this.userService.getImgFileName(ouid);
   }
 
