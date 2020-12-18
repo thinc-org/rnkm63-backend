@@ -28,7 +28,7 @@ export class LoggerMiddleware implements NestMiddleware {
       uid: (req as RequestWithUserID).user?.uid,
       method: req.method,
       path: req.originalUrl,
-      reqBody: req.body,
+      reqBody: JSON.stringify(req.body),
       status: res.statusCode,
     };
   }
