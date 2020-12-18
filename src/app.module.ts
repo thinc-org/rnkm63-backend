@@ -58,6 +58,7 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(GlobalMiddleware)
+      // .exclude('global')
       .forRoutes({ path: '*', method: RequestMethod.ALL });
     consumer
       .apply(LoggerMiddleware)
