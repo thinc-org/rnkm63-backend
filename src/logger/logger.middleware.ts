@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
-import { NestMiddleware, Injectable, UseGuards } from '@nestjs/common';
+import { Request, Response } from 'express';
+import { NestMiddleware, Injectable } from '@nestjs/common';
 import {
   generateRandomString,
   generateRandomNumber,
