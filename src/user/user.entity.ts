@@ -27,6 +27,9 @@ export class User {
   disease: string | null;
 
   @Column({ nullable: true })
+  allergy: string | null;
+
+  @Column({ nullable: true })
   allergyMedicine: string | null;
 
   @Column({ nullable: true })
@@ -63,7 +66,7 @@ export class User {
   reason: string | null;
 
   @Column()
-  editRound: number;
+  editPhase: number;
 
   @Column()
   isQualified: boolean;
@@ -79,6 +82,9 @@ export class User {
 
   @Column({ nullable: true })
   preferBaan: number | null;
+
+  @Column()
+  requestedBaanChange: boolean;
 
   @Column()
   imgURL: string;

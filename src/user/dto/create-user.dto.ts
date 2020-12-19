@@ -16,6 +16,8 @@ export class ReturnUserDTO {
 }
 
 export class UserData {
+  facultyEn: string;
+  facultyTh: string;
   prefixname: string;
   realname: string;
   surname: string;
@@ -27,6 +29,7 @@ export class UserData {
   emergencyTel: string;
   emergencyTelRelationship: string;
   disease: string;
+  allergy: string;
   allergyMedicine: string;
   usedMedicine: string;
   foodRestriction: string;

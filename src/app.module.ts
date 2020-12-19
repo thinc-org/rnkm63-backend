@@ -11,6 +11,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { BaanModule } from './baan/baan.module';
+import { GlobalModule } from './global/global.module';
+import { GlobalMiddleware } from './global/global.middleware';
 import { LoggerModule } from './logger/logger.module';
 import { LoggerMiddleware } from './logger/logger.middleware';
 import { LoggerFilter } from './logger/logger.filter';
@@ -40,6 +42,7 @@ import configuration from './config/configuration';
     AuthModule,
     UserModule,
     BaanModule,
+    GlobalModule,
     LoggerModule,
   ],
   controllers: [AppController],
@@ -53,6 +56,9 @@ import configuration from './config/configuration';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(GlobalMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
     consumer
       .apply(LoggerMiddleware)
       .forRoutes({ path: '*', method: RequestMethod.ALL });
