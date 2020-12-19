@@ -10,9 +10,9 @@ export class BaanService {
     private baanRepository: Repository<Baan>,
   ) {}
 
-  getAllBaan(): Promise<Baan[]> {
-    return this.baanRepository.find();
-  }
+  // getAllBaan(): Promise<Baan[]> {
+  //   return this.baanRepository.find();
+  // }
 
   async findBaan(baanID: number): Promise<Baan> {
     return await this.baanRepository.findOne(baanID);
