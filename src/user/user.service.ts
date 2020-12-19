@@ -145,7 +145,7 @@ export class UserService {
       ],
       fields: {
         acl: 'public-read-write',
-        'Cache-Control': 'private, max-age=3600',
+        'Cache-Control': 'private',
       },
     };
     const cred = await imgStorage.bucket
