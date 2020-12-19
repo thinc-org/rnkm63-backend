@@ -33,12 +33,31 @@ export class LoggerService implements OnModuleDestroy {
       .stringField('reqID', log.reqID);
     return points;
   }
+  private createErrorPoints(error: Error) {
+    const points = new Point('error')
+      .stringField('reqID', error.reqID)
+      .intField('code', error.code)
+      .stringField('message', error.message)
+      .stringField('error', error.message);
+    return points;
+  }
 
   addLog(log: Logger) {
     const point = this.createPoints(log);
     this.writeApi.writePoint(point);
   }
+  addError(error: Error) {
+    const point = this.createErrorPoints(error);
+    this.writeApi.writePoint(point);
+  }
 }
+export interface Error {
+  reqID: string;
+  code: number;
+  message: string;
+  error: string;
+}
+
 export interface Logger {
   timeRequest: number;
   ipAddress: string;

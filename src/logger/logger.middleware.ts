@@ -1,23 +1,14 @@
 import { Request, Response } from 'express';
 import { NestMiddleware, Injectable } from '@nestjs/common';
-import {
-  generateRandomString,
-  generateRandomNumber,
-} from '../utility/function';
 import { RequestWithUserID } from '../utility/type';
-import { AuthService } from '../auth/auth.service';
 import { LoggerService, Logger } from './logger.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
-  constructor(
-    readonly authService: AuthService,
-    readonly loggerService: LoggerService,
-  ) {}
+  constructor(readonly loggerService: LoggerService) {}
   generateRequestID(req: Request, res: Response) {
-    const str = generateRandomString(7);
-    const num = generateRandomNumber(7);
-    const reqID = str + num;
+    const reqID = uuidv4();
     res.append('X-Request-ID', reqID);
     (req as RequestWithID).reqid = reqID;
   }

@@ -47,10 +47,10 @@ export class AuthService {
           HttpStatus.TOO_MANY_REQUESTS,
         );
       } else {
-        console.log(
+        console.error(
           'Chula SSO Error',
           this.configService.get('sso.url') + '/serviceValidation',
-          error,
+          error.response?.data,
         );
         throw new HttpException(
           "Can't connect to Chula SSO",
