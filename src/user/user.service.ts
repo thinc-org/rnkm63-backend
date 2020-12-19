@@ -149,7 +149,7 @@ export class UserService {
 
     if (typeof user === 'undefined')
       throw new HttpException('User Not Found', HttpStatus.BAD_REQUEST);
-    else if (user.isConfirm === false)
+    if (user.isConfirm === false)
       throw new HttpException('User Not Confirm', HttpStatus.BAD_REQUEST);
     if (typeof preferBaanID === 'undefined')
       throw new HttpException('Prefer Baan Not Found', HttpStatus.BAD_REQUEST);
@@ -158,7 +158,8 @@ export class UserService {
         'Cannot Prefer Current Baan',
         HttpStatus.BAD_REQUEST,
       );
-    } else if (preferBaanID === null) {
+    }
+    if (preferBaanID === null) {
       user.preferBaan = null;
       user.requestedBaanChange = false;
       await this.userRepository.save(user);
@@ -172,12 +173,10 @@ export class UserService {
       const preferBaanData = await this.baanService.findBaan(preferBaanID);
       if (typeof preferBaanData === 'undefined')
         throw new HttpException('Baan Not Found', HttpStatus.BAD_REQUEST);
-      else {
-        user.preferBaan = preferBaanData.id;
-        user.requestedBaanChange = true;
-        await this.userRepository.save(user);
-        return `Current Baan ID: ${preferBaanData.id}`;
-      }
+      user.preferBaan = preferBaanData.id;
+      user.requestedBaanChange = true;
+      await this.userRepository.save(user);
+      return `Current Baan ID: ${preferBaanData.id}`;
     }
   }
 

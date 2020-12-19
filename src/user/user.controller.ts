@@ -39,7 +39,7 @@ export class UserController {
     return await this.userService.postProfile(req.user.uid, confirmUserDTO);
   }
 
-  @Post('requestedBaanChange')
+  @Post('requestBaanChange')
   @UseGuards(JwtAuthGuard)
   async requestedBaanChange(
     @Req() req: RequestWithUserID,
