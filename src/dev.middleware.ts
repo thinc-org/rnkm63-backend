@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class DevMiddleware implements NestMiddleware {
-  private isInDev: boolean = false;
+  private isInDev = false;
   constructor(private configService: ConfigService) {
     this.isInDev = this.configService.get<boolean>('inDev');
   }
