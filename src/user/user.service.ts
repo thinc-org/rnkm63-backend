@@ -144,7 +144,6 @@ export class UserService {
         ['content-length-range', 0, 500 * 1024],
       ],
       fields: {
-        acl: 'public-read-write',
         'Cache-Control': 'private',
       },
     };
