@@ -196,6 +196,10 @@ export class UserService {
         ['eq', '$Content-Type', 'image/jpeg'],
         ['content-length-range', 0, 500 * 1024],
       ],
+      fields: {
+        acl: 'public-read-write',
+        'Cache-Control': 'private',
+      },
     };
     const cred = await imgStorage.bucket
       .file(fileName)
