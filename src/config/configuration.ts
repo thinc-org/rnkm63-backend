@@ -27,7 +27,7 @@ export default () => ({
     secret: process.env.IMG_FILE_NAME_SECRET,
   },
   jwtSecret: process.env.JWT_SECRET,
-  inDev: process.env.IN_DEV,
+  inDev: process.env.IN_DEV === 'true',
   cors: {
     origin: process.env.CORS_ORIGIN || '*',
     use: process.env.USE_CORS === 'true',
