@@ -10,7 +10,7 @@ export class HeaderGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     if (this.configService.get<boolean>('inDev')) {
-      return this.configService.get<boolean>('inDev');
+      return true;
     }
     const request = context.switchToHttp().getRequest();
     const noCSRF = !!request.headers['no-csrf'];

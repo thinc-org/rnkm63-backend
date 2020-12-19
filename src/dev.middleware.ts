@@ -13,6 +13,7 @@ export class DevMiddleware implements NestMiddleware {
       res.statusCode = HttpStatus.FORBIDDEN;
       res.json({
         statusCode: HttpStatus.FORBIDDEN,
+        message: 'In Process',
       });
     } else next();
   }
