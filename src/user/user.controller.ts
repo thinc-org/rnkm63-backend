@@ -3,20 +3,21 @@ import {
   Controller,
   Get,
   Post,
-  Query,
-  Param,
+  // Query,
+  // Param,
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { /*ApiOperation,*/ ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import {
   ConfirmUserDTO,
   ReturnUserDTO,
   RequestedBaanChangeDTO,
 } from './dto/create-user.dto';
-import { MockUserDTO } from './dto/mock.dto';
+// import { MockUserDTO } from './dto/mock.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { HeaderGuard } from '../auth/header.guard';
 import { RequestWithUserID } from '../utility/type';
 
 @ApiTags('user')
@@ -26,12 +27,14 @@ export class UserController {
 
   @Get('profile')
   @UseGuards(JwtAuthGuard)
+  @UseGuards(HeaderGuard)
   async getProfile(@Req() req: RequestWithUserID): Promise<ReturnUserDTO> {
     return await this.userService.getProfile(req.user.uid);
   }
 
   @Post('profile')
   @UseGuards(JwtAuthGuard)
+  @UseGuards(HeaderGuard)
   async postProfile(
     @Req() req: RequestWithUserID,
     @Body() confirmUserDTO: ConfirmUserDTO,
@@ -39,8 +42,19 @@ export class UserController {
     return await this.userService.postProfile(req.user.uid, confirmUserDTO);
   }
 
+  @Get('getUploadPolicy')
+  @UseGuards(JwtAuthGuard)
+  @UseGuards(HeaderGuard)
+  getUploadCred(@Req() req: RequestWithUserID) {
+    const ouid = req.user.uid;
+    const fileName = this.userService.getImgFileName(ouid);
+    return this.userService.getUploadCred(fileName);
+  }
+
+  //Begin For Phase 2
   @Post('requestBaanChange')
   @UseGuards(JwtAuthGuard)
+  @UseGuards(HeaderGuard)
   async requestedBaanChange(
     @Req() req: RequestWithUserID,
     @Body() requestedBaanChangeDTO: RequestedBaanChangeDTO,
@@ -50,6 +64,7 @@ export class UserController {
       requestedBaanChangeDTO,
     );
   }
+  //End For Phase 2
 
   //Begin For Test Only Section
   // @Get('user')
@@ -57,41 +72,33 @@ export class UserController {
   // getUser(@Req() req) {
   //   return req.user;
   // }
-
-  @Get('getAllUser')
-  getAllUser() {
-    return this.userService.getAllUser();
-  }
-
-  @Get('generateUser')
-  generateUser() {
-    return this.userService.generateUser();
-  }
-
-  @Get('getUploadPolicy')
-  @UseGuards(JwtAuthGuard)
-  getUploadCred(@Req() req: RequestWithUserID) {
-    const ouid = req.user.uid;
-    const fileName = this.userService.getImgFileName(ouid);
-    return this.userService.getUploadCred(fileName);
-  }
-
-  @Get('getUploadFileName')
-  @UseGuards(JwtAuthGuard)
-  getUploadFileName(@Req() req: RequestWithUserID) {
-    const ouid = req.user.uid;
-    return this.userService.getImgFileName(ouid);
-  }
-
-  @Get('mockUser')
-  @ApiOperation({ summary: 'Get Mock User Date delete after real finish' })
-  getMockData(@Query() query: MockUserDTO) {
-    return this.userService.mockUser(query.mode);
-  }
-
-  @Get(':id')
-  findUser(@Param() params) {
-    return this.userService.findUser(params.id);
-  }
+  //
+  // @Get('getAllUser')
+  // getAllUser() {
+  //   return this.userService.getAllUser();
+  // }
+  //
+  // @Get('generateUser')
+  // generateUser() {
+  //   return this.userService.generateUser();
+  // }
+  //
+  // @Get('getUploadFileName')
+  // @UseGuards(JwtAuthGuard)
+  // getUploadFileName(@Req() req: RequestWithUserID) {
+  //   const ouid = req.user.uid;
+  //   return this.userService.getImgFileName(ouid);
+  // }
+  //
+  // @Get('mockUser')
+  // @ApiOperation({ summary: 'Get Mock User Date delete after real finish' })
+  // getMockData(@Query() query: MockUserDTO) {
+  //   return this.userService.mockUser(query.mode);
+  // }
+  //
+  // @Get(':id')
+  // findUser(@Param() params) {
+  //   return this.userService.findUser(params.id);
+  // }
   //End For Test Only Section
 }

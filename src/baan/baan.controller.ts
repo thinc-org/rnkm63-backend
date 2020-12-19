@@ -7,8 +7,8 @@ import { BaanService } from './baan.service';
 export class BaanController {
   constructor(private baanService: BaanService) {}
 
-  @Get(':id')
-  getBaan(@Param() params) {
-    return this.baanService.findBaan(params.id);
-  }
+  // @Get(':id')
+  // getBaan(@Param() params) {
+  //   return this.baanService.findBaan(params.id);
+  // }
 }
