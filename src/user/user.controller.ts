@@ -1,21 +1,11 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  // Query,
-  // Param,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
-import { /*ApiOperation,*/ ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import {
   ConfirmUserDTO,
   ReturnUserDTO,
   RequestedBaanChangeDTO,
 } from './dto/create-user.dto';
-// import { MockUserDTO } from './dto/mock.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { HeaderGuard } from '../auth/header.guard';
 import { RequestWithUserID } from '../utility/type';
@@ -67,38 +57,14 @@ export class UserController {
   //End For Phase 2
 
   //Begin For Test Only Section
-  // @Get('user')
-  // @UseGuards(JwtAuthGuard)
-  // getUser(@Req() req) {
-  //   return req.user;
-  // }
-  //
-  // @Get('getAllUser')
-  // getAllUser() {
-  //   return this.userService.getAllUser();
-  // }
-  //
-  // @Get('generateUser')
-  // generateUser() {
-  //   return this.userService.generateUser();
-  // }
-  //
-  // @Get('getUploadFileName')
-  // @UseGuards(JwtAuthGuard)
-  // getUploadFileName(@Req() req: RequestWithUserID) {
-  //   const ouid = req.user.uid;
-  //   return this.userService.getImgFileName(ouid);
-  // }
-  //
-  // @Get('mockUser')
-  // @ApiOperation({ summary: 'Get Mock User Date delete after real finish' })
-  // getMockData(@Query() query: MockUserDTO) {
-  //   return this.userService.mockUser(query.mode);
-  // }
-  //
-  // @Get(':id')
-  // findUser(@Param() params) {
-  //   return this.userService.findUser(params.id);
-  // }
+  @Get('getAllUser')
+  getAllUser() {
+    return this.userService.getAllUser();
+  }
+
+  @Get('generateUser')
+  generateUser() {
+    return this.userService.generateUser();
+  }
   //End For Test Only Section
 }

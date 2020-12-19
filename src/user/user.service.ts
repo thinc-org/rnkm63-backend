@@ -12,10 +12,6 @@ import {
   UserData,
   RequestedBaanChangeDTO,
 } from './dto/create-user.dto';
-// import {
-//   generateRandomString,
-//   generateRandomNumber,
-// } from '../utility/function';
 import { facultyList } from '../utility/facultyList';
 import { FacultyName } from '../utility/type';
 import { GlobalService } from '../global/global.service';
@@ -206,140 +202,82 @@ export class UserService {
   //End For Phase 2
 
   //Begin For Test Only Section
-  // getAllUser(): Promise<User[]> {
-  //   return this.userRepository.find();
-  // }
-  //
-  // findUser(userID): Promise<User> {
-  //   return this.userRepository.findOne({ uid: userID });
-  // }
-  //
-  // generateUser(): Promise<User> {
-  //   const generateRandomString = (
-  //     len: number,
-  //     excludeNumber = false,
-  //   ): string => {
-  //     const availableString =
-  //       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  //     let generateString = '';
-  //     for (let i = 0; i < len; i++)
-  //       generateString +=
-  //         availableString[
-  //           Math.floor(
-  //             Math.random() *
-  //               (availableString.length - (excludeNumber ? 10 : 0)),
-  //           )
-  //         ];
-  //     return generateString;
-  //   };
-  //   const generateRandomNumber = (len: number): string => {
-  //     let generateString = '';
-  //     for (let i = 0; i < len; i++)
-  //       generateString += Math.floor(Math.random() * 10).toString();
-  //     return generateString;
-  //   };
-  //   const prefixName = ['นาย', 'นางสาว'];
-  //   const religion = [
-  //     'buddhism',
-  //     'christianity',
-  //     'islam',
-  //     'hinduism',
-  //     'sikhism',
-  //     'other',
-  //     'RNS',
-  //   ];
-  //   const randomPeopleType = Math.floor(Math.random() * 5);
-  //   const facultyIDList = Object.keys(facultyList);
-  //
-  //   const user = new User();
-  //   user.uid =
-  //     '633' +
-  //     generateRandomNumber(5) +
-  //     facultyIDList[Math.floor(Math.random() * facultyIDList.length)];
-  //   user.prefixname = prefixName[Math.floor(Math.random() * prefixName.length)];
-  //   user.realname = 'realname-' + generateRandomString(6, true).toLowerCase();
-  //   user.surname = 'surname-' + generateRandomString(6, true).toLowerCase();
-  //   user.nickname = 'nickname-' + generateRandomString(4, true).toLowerCase();
-  //   user.religion = religion[Math.floor(Math.random() * religion.length)];
-  //   user.disease = '';
-  //   user.allergy = '';
-  //   user.allergyMedicine = '';
-  //   user.usedMedicine = '';
-  //   user.foodRestriction = '';
-  //   user.disability = '';
-  //   user.tel = '0' + generateRandomNumber(9);
-  //   user.emergencyTel = '0' + generateRandomNumber(9);
-  //   user.emergencyTelRelationship = '';
-  //   user.facebook = 'www.facebook.com/' + generateRandomString(8);
-  //   user.lineID = generateRandomString(8);
-  //   user.isNameWrong = [0, 2].includes(randomPeopleType) ? true : false;
-  //   user.isImgWrong = [1, 2].includes(randomPeopleType) ? true : false;
-  //   user.reason = [3, 4].includes(randomPeopleType)
-  //     ? 'There is a reason'
-  //     : null;
-  //   user.editPhase = 0;
-  //   user.isQualified = [3].includes(randomPeopleType) ? true : false;
-  //   user.isConfirm = [4].includes(randomPeopleType) ? true : false;
-  //   user.isTransfer = false;
-  //   user.currentBaan = Math.floor(Math.random() * 36);
-  //   user.preferBaan = null;
-  //   user.requestedBaanChange = false;
-  //   user.imgURL = '';
-  //   return this.userRepository.save(user);
-  // }
-  //
-  // mockUser(mode): ReturnUserDTO {
-  //   const prefixName = ['นาย', 'นางสาว'];
-  //   const religion = [
-  //     'buddhism',
-  //     'christianity',
-  //     'islam',
-  //     'hinduism',
-  //     'sikhism',
-  //     'other',
-  //     'RNS',
-  //   ];
-  //   const user = new ReturnUserDTO();
-  //   const userData = new UserData();
-  //   // userData.uid = '633' + generateRandomNumber(7);
-  //   userData.prefixname =
-  //     prefixName[Math.floor(Math.random() * prefixName.length)];
-  //   userData.realname =
-  //     'realname-' + generateRandomString(6, true).toLowerCase();
-  //   userData.surname = 'surname-' + generateRandomString(6, true).toLowerCase();
-  //   userData.nickname =
-  //     'nickname-' + generateRandomString(4, true).toLowerCase();
-  //   userData.religion = religion[Math.floor(Math.random() * religion.length)];
-  //   userData.disease = '';
-  //   userData.allergy = '';
-  //   userData.allergyMedicine = '';
-  //   userData.usedMedicine = '';
-  //   userData.foodRestriction = '';
-  //   userData.disability = '';
-  //   userData.tel = generateRandomNumber(10);
-  //   userData.emergencyTel = generateRandomNumber(10);
-  //   userData.emergencyTelRelationship = '';
-  //   userData.facebook = 'www.facebook.com/' + generateRandomString(8);
-  //   userData.lineID = generateRandomString(8);
-  //   userData.imgURL =
-  //     'https://media.discordapp.net/attachments/780977351428931594/784451408275046460/ElL3lTKVkAA2CmN.png';
-  //   if (mode > 0) {
-  //     user.data = userData;
-  //     user.isNameWrong = mode % 2 == 1 && mode < 4;
-  //     user.isImgWrong = mode > 1 && mode < 4;
-  //     user.reason = mode > 3 ? null : 'There is a reason';
-  //   } else {
-  //     user.data = null;
-  //     user.isNameWrong = false;
-  //     user.isImgWrong = false;
-  //     user.reason = null;
-  //   }
-  //   user.isQualified = mode == 4;
-  //   user.isConfirm = mode == 5;
-  //   user.isTransfer = false;
-  //   user.currentBaan = Math.floor(Math.random() * 36);
-  //   user.preferBaan = null;
-  //   return user;
-  // }
+  getAllUser(): Promise<User[]> {
+    return this.userRepository.find();
+  }
+
+  generateUser(): Promise<User> {
+    const generateRandomString = (
+      len: number,
+      excludeNumber = false,
+    ): string => {
+      const availableString =
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let generateString = '';
+      for (let i = 0; i < len; i++)
+        generateString +=
+          availableString[
+            Math.floor(
+              Math.random() *
+                (availableString.length - (excludeNumber ? 10 : 0)),
+            )
+          ];
+      return generateString;
+    };
+    const generateRandomNumber = (len: number): string => {
+      let generateString = '';
+      for (let i = 0; i < len; i++)
+        generateString += Math.floor(Math.random() * 10).toString();
+      return generateString;
+    };
+    const prefixName = ['นาย', 'นางสาว'];
+    const religion = [
+      'buddhism',
+      'christianity',
+      'islam',
+      'hinduism',
+      'sikhism',
+      'other',
+      'RNS',
+    ];
+    const randomPeopleType = Math.floor(Math.random() * 5);
+    const facultyIDList = Object.keys(facultyList);
+
+    const user = new User();
+    user.uid =
+      '633' +
+      generateRandomNumber(5) +
+      facultyIDList[Math.floor(Math.random() * facultyIDList.length)];
+    user.prefixname = prefixName[Math.floor(Math.random() * prefixName.length)];
+    user.realname = 'realname-' + generateRandomString(6, true).toLowerCase();
+    user.surname = 'surname-' + generateRandomString(6, true).toLowerCase();
+    user.nickname = 'nickname-' + generateRandomString(4, true).toLowerCase();
+    user.religion = religion[Math.floor(Math.random() * religion.length)];
+    user.disease = '';
+    user.allergy = '';
+    user.allergyMedicine = '';
+    user.usedMedicine = '';
+    user.foodRestriction = '';
+    user.disability = '';
+    user.tel = '0' + generateRandomNumber(9);
+    user.emergencyTel = '0' + generateRandomNumber(9);
+    user.emergencyTelRelationship = '';
+    user.facebook = 'www.facebook.com/' + generateRandomString(8);
+    user.lineID = generateRandomString(8);
+    user.isNameWrong = [0, 2].includes(randomPeopleType) ? true : false;
+    user.isImgWrong = [1, 2].includes(randomPeopleType) ? true : false;
+    user.reason = [3, 4].includes(randomPeopleType)
+      ? 'There is a reason'
+      : null;
+    user.editPhase = 0;
+    user.isQualified = [3].includes(randomPeopleType) ? true : false;
+    user.isConfirm = [4].includes(randomPeopleType) ? true : false;
+    user.isTransfer = false;
+    user.currentBaan = Math.floor(Math.random() * 36);
+    user.preferBaan = null;
+    user.requestedBaanChange = false;
+    user.imgURL = '';
+    return this.userRepository.save(user);
+  }
   //End For Test Only Section
 }

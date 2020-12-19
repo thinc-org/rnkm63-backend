@@ -22,7 +22,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   validate(payload: JwtDto): JwtDto {
-    // console.log(payload);
     return { uid: payload.uid };
   }
 }

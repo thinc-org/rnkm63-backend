@@ -16,7 +16,7 @@ import { GlobalMiddleware } from './global/global.middleware';
 import { LoggerModule } from './logger/logger.module';
 import { LoggerMiddleware } from './logger/logger.middleware';
 import { LoggerFilter } from './logger/logger.filter';
-// import { DevMiddleware } from './dev.middleware';
+import { DevMiddleware } from './dev.middleware';
 import { APP_FILTER } from '@nestjs/core';
 import configuration from './config/configuration';
 
@@ -64,8 +64,11 @@ export class AppModule implements NestModule {
     consumer
       .apply(LoggerMiddleware)
       .forRoutes({ path: '*', method: RequestMethod.ALL });
-    // consumer
-    // .apply(DevMiddleware)
-    // .forRoutes();
+    consumer
+      .apply(DevMiddleware)
+      .forRoutes(
+        { path: 'user/getAllUser', method: RequestMethod.ALL },
+        { path: 'user/generateUser', method: RequestMethod.ALL },
+      );
   }
 }
