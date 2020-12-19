@@ -36,8 +36,6 @@ export class LoggerFilter implements ExceptionFilter {
         }
       }
     }
-    //console.log(err);
-    //console.log(exception);
     if (err.code === 500) {
       console.error(exception);
     }
