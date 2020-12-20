@@ -1,9 +1,9 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { BaanService } from './baan.service';
 
 @ApiTags('baan')
 @Controller('baan')
 export class BaanController {
-  constructor(private baanService: BaanService) {}
+  constructor() {}
 }
