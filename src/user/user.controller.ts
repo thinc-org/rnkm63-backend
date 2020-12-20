@@ -16,15 +16,13 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get('profile')
-  @UseGuards(JwtAuthGuard)
-  @UseGuards(HeaderGuard)
+  @UseGuards(JwtAuthGuard, HeaderGuard)
   async getProfile(@Req() req: RequestWithUserID): Promise<ReturnUserDTO> {
     return await this.userService.getProfile(req.user.uid);
   }
 
   @Post('profile')
-  @UseGuards(JwtAuthGuard)
-  @UseGuards(HeaderGuard)
+  @UseGuards(JwtAuthGuard, HeaderGuard)
   async postProfile(
     @Req() req: RequestWithUserID,
     @Body() confirmUserDTO: ConfirmUserDTO,
@@ -33,8 +31,7 @@ export class UserController {
   }
 
   @Get('getUploadPolicy')
-  @UseGuards(JwtAuthGuard)
-  @UseGuards(HeaderGuard)
+  @UseGuards(JwtAuthGuard, HeaderGuard)
   getUploadCred(@Req() req: RequestWithUserID) {
     const ouid = req.user.uid;
     const fileName = this.userService.getImgFileName(ouid);
@@ -43,8 +40,7 @@ export class UserController {
 
   //Begin For Phase 2
   @Post('requestBaanChange')
-  @UseGuards(JwtAuthGuard)
-  @UseGuards(HeaderGuard)
+  @UseGuards(JwtAuthGuard, HeaderGuard)
   async requestedBaanChange(
     @Req() req: RequestWithUserID,
     @Body() requestedBaanChangeDTO: RequestedBaanChangeDTO,
