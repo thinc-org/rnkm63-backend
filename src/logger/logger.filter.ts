@@ -18,7 +18,7 @@ export class LoggerFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
-    let err = {
+    const err = {
       reqID: (request as RequestWithID).reqid,
       code: 500,
       message: '',
@@ -30,7 +30,7 @@ export class LoggerFilter implements ExceptionFilter {
       if (typeof exception.getResponse() === 'string') {
         err.message = exception.getResponse() as string;
       } else {
-        const ex = exception.getResponse() as object;
+        const ex = exception.getResponse() as Record<string, unknown>;
         if ('message' in ex) {
           err.message = ex['message'];
         }
