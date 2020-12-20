@@ -30,7 +30,7 @@ export class LoggerFilter implements ExceptionFilter {
       if (typeof exception.getResponse() === 'string') {
         err.message = exception.getResponse() as string;
       } else {
-        const ex = exception.getResponse() as Record<string, unknown>;
+        const ex = exception.getResponse() as Record<string, string>;
         if ('message' in ex) {
           err.message = ex['message'];
         }

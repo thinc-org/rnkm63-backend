@@ -4,6 +4,4 @@ import { BaanService } from './baan.service';
 
 @ApiTags('baan')
 @Controller('baan')
-export class BaanController {
-  constructor() {}
-}
+export class BaanController {}
