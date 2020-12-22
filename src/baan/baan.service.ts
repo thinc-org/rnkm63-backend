@@ -5,10 +5,6 @@ import { Baan } from './baan.entity';
 
 @Injectable()
 export class BaanService {
-  private cacheBaanData: Baan[];
-  private cacheTimeStamp = 0;
-  private baanRequestCount: number[] = [];
-
   constructor(
     @InjectRepository(Baan)
     private baanRepository: Repository<Baan>,

@@ -20,6 +20,9 @@ import { BaanService } from '../baan/baan.service';
 
 @Injectable()
 export class UserService {
+  private cacheAllUserPreferBaan: PreferBaanRequestCountDTO[] = null;
+  private cacheAllUserPreferBaanTimeStamp = 0;
+
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
@@ -210,14 +213,18 @@ export class UserService {
         HttpStatus.FORBIDDEN,
       );
 
-    return await this.userRepository
-      .createQueryBuilder()
-      .select('User.preferBaan', 'baanID')
-      .addSelect('cast(count(User.uid) as integer)', 'requestCount')
-      .where('User.preferBaan is not null')
-      .groupBy('User.preferBaan')
-      .orderBy('User.preferBaan')
-      .getRawMany();
+    if (new Date().getTime() - this.cacheAllUserPreferBaanTimeStamp >= 10000) {
+      this.cacheAllUserPreferBaanTimeStamp = new Date().getTime();
+      this.cacheAllUserPreferBaan = await this.userRepository
+        .createQueryBuilder()
+        .select('User.preferBaan', 'baanID')
+        .addSelect('cast(count(User.uid) as integer)', 'requestCount')
+        .where('User.preferBaan is not null')
+        .groupBy('User.preferBaan')
+        .orderBy('User.preferBaan')
+        .getRawMany();
+    }
+    return this.cacheAllUserPreferBaan;
   }
   //End For Phase 2
 
