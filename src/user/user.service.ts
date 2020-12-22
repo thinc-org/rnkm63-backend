@@ -11,7 +11,8 @@ import {
   ReturnUserDTO,
   UserData,
   RequestedBaanChangeDTO,
-} from './dto/create-user.dto';
+  PreferBaanRequestCountDTO,
+} from './dto/user.dto';
 import { facultyList } from '../utility/facultyList';
 import { FacultyName } from '../utility/type';
 import { GlobalService } from '../global/global.service';
@@ -38,6 +39,8 @@ export class UserService {
     const isInDB = typeof user === 'undefined' ? false : true;
     const faculty = this.getUserFaculty(uid);
 
+    if (typeof faculty === 'undefined')
+      throw new HttpException('User Faculty Not Found', HttpStatus.NOT_FOUND);
     const responseData: ReturnUserDTO = {
       data: isInDB
         ? {
@@ -198,6 +201,23 @@ export class UserService {
       await this.userRepository.save(user);
       return `Current Baan ID: ${preferBaanData.id}`;
     }
+  }
+
+  async getAllUserPreferBaan(): Promise<PreferBaanRequestCountDTO[]> {
+    if ((await this.globalService.getGlobal()).phaseCount < 2)
+      throw new HttpException(
+        'Global Phase Below Than 2',
+        HttpStatus.FORBIDDEN,
+      );
+
+    return await this.userRepository
+      .createQueryBuilder()
+      .select('User.preferBaan', 'baanID')
+      .addSelect('cast(count(User.uid) as integer)', 'requestCount')
+      .where('User.preferBaan is not null')
+      .groupBy('User.preferBaan')
+      .orderBy('User.preferBaan')
+      .getRawMany();
   }
   //End For Phase 2
 

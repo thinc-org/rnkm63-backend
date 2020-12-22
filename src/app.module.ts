@@ -69,6 +69,7 @@ export class AppModule implements NestModule {
       .forRoutes(
         { path: 'user/getAllUser', method: RequestMethod.ALL },
         { path: 'user/generateUser', method: RequestMethod.ALL },
+        { path: 'baan/generateBaanDatabase', method: RequestMethod.ALL },
       );
   }
 }
