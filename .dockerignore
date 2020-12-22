@@ -1,0 +1,8 @@
+node_modules
+.dockerignore
+.gitignore
+.prettierrc
+cloudbuild.yaml
+Dockerfile
+k8s.yaml
+README.md

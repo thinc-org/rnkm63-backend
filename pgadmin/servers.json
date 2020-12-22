@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "rnkm63",
+      "Group": "Servers",
+      "Port": 5432,
+      "Username": "rnkm63",
+      "Host": "db",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "rnkm63"
+    }
+  }
+}
