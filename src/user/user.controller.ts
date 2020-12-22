@@ -5,7 +5,8 @@ import {
   ConfirmUserDTO,
   ReturnUserDTO,
   RequestedBaanChangeDTO,
-} from './dto/create-user.dto';
+  PreferBaanRequestCountDTO,
+} from './dto/user.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { HeaderGuard } from '../auth/header.guard';
 import { RequestWithUserID } from '../utility/type';
@@ -49,6 +50,12 @@ export class UserController {
       req.user.uid,
       requestedBaanChangeDTO,
     );
+  }
+
+  @Get('getAllUserPreferBaan')
+  @UseGuards(JwtAuthGuard, HeaderGuard)
+  async getAllUserPreferBaan(): Promise<PreferBaanRequestCountDTO[]> {
+    return await this.userService.getAllUserPreferBaan();
   }
   //End For Phase 2
 

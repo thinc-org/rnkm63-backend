@@ -40,3 +40,8 @@ export class UserData {
 export class RequestedBaanChangeDTO {
   preferBaan: number | null;
 }
+
+export class PreferBaanRequestCountDTO {
+  baanID: number;
+  requestCount: number;
+}
