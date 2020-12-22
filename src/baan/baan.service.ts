@@ -58,8 +58,8 @@ export class BaanService {
     ];
 
     if ((await this.baanRepository.find()).length === 0) {
-      for (let e of baanData) {
-        let baan = new Baan();
+      for (const e of baanData) {
+        const baan = new Baan();
 
         baan.id = e.id;
         baan.capacity = e.capacity;
