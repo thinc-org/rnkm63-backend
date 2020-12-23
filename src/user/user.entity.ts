@@ -83,6 +83,9 @@ export class User {
   @Column({ nullable: true })
   preferBaan: number | null;
 
+  @Column({ nullable: true })
+  baanMemberID: number | null;
+
   @Column()
   requestedBaanChange: boolean;
 
