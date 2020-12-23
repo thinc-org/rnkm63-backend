@@ -16,8 +16,6 @@ export class BaanService {
 
   //Begin Test Section
   async generateBaanDatabase() {
-    await this.baanRepository.clear();
-
     const baanData = [
       { id: 1, capacity: 315, memberCount: 313 },
       { id: 2, capacity: 460, memberCount: 459 },
@@ -52,8 +50,9 @@ export class BaanService {
       { id: 35, capacity: 100, memberCount: 83 },
       { id: 36, capacity: 150, memberCount: 127 },
     ];
+    const countBaan = await this.baanRepository.count();
 
-    if ((await this.baanRepository.find()).length === 0) {
+    if (countBaan === 0) {
       for (const e of baanData) {
         const baan = new Baan();
 
