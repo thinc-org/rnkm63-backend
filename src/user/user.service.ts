@@ -164,12 +164,6 @@ export class UserService {
     uid: string,
     requestedBaanChangeDTO: RequestedBaanChangeDTO,
   ): Promise<string> {
-    if ((await this.globalService.getGlobal()).phaseCount < 2)
-      throw new HttpException(
-        'Global Phase Below Than 2',
-        HttpStatus.FORBIDDEN,
-      );
-
     const user = await this.userRepository.findOne({ uid: uid });
     const preferBaanID = requestedBaanChangeDTO.preferBaan;
 
@@ -207,12 +201,6 @@ export class UserService {
   }
 
   async getAllUserPreferBaan(): Promise<PreferBaanRequestCountDTO[]> {
-    if ((await this.globalService.getGlobal()).phaseCount < 2)
-      throw new HttpException(
-        'Global Phase Below Than 2',
-        HttpStatus.FORBIDDEN,
-      );
-
     if (new Date().getTime() - this.cacheAllUserPreferBaanTimeStamp >= 10000) {
       this.cacheAllUserPreferBaanTimeStamp = new Date().getTime();
       this.cacheAllUserPreferBaan = await this.userRepository
