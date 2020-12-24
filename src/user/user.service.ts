@@ -204,15 +204,17 @@ export class UserService {
     if (new Date().getTime() - this.cacheAllUserPreferBaanTimeStamp >= 10000) {
       this.cacheAllUserPreferBaanTimeStamp = new Date().getTime();
       const allUserPreferBaan = [];
-      const allBaanData = await this.baanService.findAllBaan();
-      const allUserRequest = await this.userRepository
-        .createQueryBuilder()
-        .select('User.preferBaan', 'baanID')
-        .addSelect('cast(count(User.uid) as integer)', 'requestCount')
-        .where('User.preferBaan is not null')
-        .groupBy('User.preferBaan')
-        .orderBy('User.preferBaan')
-        .getRawMany();
+      const [allBaanData, allUserRequest] = await Promise.all([
+        this.baanService.findAllBaan(),
+        this.userRepository
+          .createQueryBuilder()
+          .select('User.preferBaan', 'baanID')
+          .addSelect('cast(count(User.uid) as integer)', 'requestCount')
+          .where('User.preferBaan is not null')
+          .groupBy('User.preferBaan')
+          .orderBy('User.preferBaan')
+          .getRawMany(),
+      ]);
       const userRequestCount = [];
       for (const e of allUserRequest)
         userRequestCount[e.baanID] = e.requestCount;
