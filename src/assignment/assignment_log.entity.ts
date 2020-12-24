@@ -15,8 +15,8 @@ export class AssignmentLog {
   @Column({ length: 10 })
   uid: string;
 
-  @Column({ nullable: true })
-  currentBaan: number | null;
+  @Column()
+  fromBaan: number;
 
   @Column({ nullable: true })
   preferBaan: number | null;
@@ -26,9 +26,6 @@ export class AssignmentLog {
 
   @Column()
   round: number;
-
-  @Column()
-  result: boolean;
 
   @CreateDateColumn()
   createAt: number;
