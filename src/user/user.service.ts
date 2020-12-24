@@ -203,7 +203,9 @@ export class UserService {
   async getAllUserPreferBaan(): Promise<PreferBaanRequestCountDTO[]> {
     if (new Date().getTime() - this.cacheAllUserPreferBaanTimeStamp >= 10000) {
       this.cacheAllUserPreferBaanTimeStamp = new Date().getTime();
-      this.cacheAllUserPreferBaan = await this.userRepository
+      const allUserPreferBaan = [];
+      const allBaanData = await this.baanService.findAllBaan();
+      const allUserRequest = await this.userRepository
         .createQueryBuilder()
         .select('User.preferBaan', 'baanID')
         .addSelect('cast(count(User.uid) as integer)', 'requestCount')
@@ -211,6 +213,21 @@ export class UserService {
         .groupBy('User.preferBaan')
         .orderBy('User.preferBaan')
         .getRawMany();
+      const userRequestCount = [];
+      for (const e of allUserRequest)
+        userRequestCount[e.baanID] = e.requestCount;
+      for (const e of allBaanData) {
+        allUserPreferBaan.push({
+          baanID: e.id,
+          capacity: e.capacity,
+          memberCount: e.memberCount,
+          requestCount:
+            typeof userRequestCount[e.id] === 'undefined'
+              ? 0
+              : userRequestCount[e.id],
+        });
+      }
+      this.cacheAllUserPreferBaan = allUserPreferBaan;
     }
     return this.cacheAllUserPreferBaan;
   }
