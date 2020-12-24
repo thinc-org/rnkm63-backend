@@ -18,6 +18,7 @@ import { LoggerMiddleware } from './logger/logger.middleware';
 import { LoggerFilter } from './logger/logger.filter';
 import { DevMiddleware } from './dev.middleware';
 import { APP_FILTER } from '@nestjs/core';
+import { AssignmentModule } from './assignment/assignment.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -45,6 +46,7 @@ import configuration from './config/configuration';
     BaanModule,
     GlobalModule,
     LoggerModule,
+    AssignmentModule,
   ],
   controllers: [AppController],
   providers: [
@@ -64,12 +66,14 @@ export class AppModule implements NestModule {
     consumer
       .apply(LoggerMiddleware)
       .forRoutes({ path: '*', method: RequestMethod.ALL });
-    consumer
-      .apply(DevMiddleware)
-      .forRoutes(
-        { path: 'user/getAllUser', method: RequestMethod.ALL },
-        { path: 'user/generateUser', method: RequestMethod.ALL },
-        { path: 'baan/generateBaanDatabase', method: RequestMethod.ALL },
-      );
+    consumer.apply(DevMiddleware).forRoutes(
+      { path: 'user/getAllUser', method: RequestMethod.ALL },
+      { path: 'user/generateUser', method: RequestMethod.ALL },
+      { path: 'baan/generateBaanDatabase', method: RequestMethod.ALL },
+      {
+        path: 'assignment/generateAssignmentLogDatabase',
+        method: RequestMethod.ALL,
+      },
+    );
   }
 }
