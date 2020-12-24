@@ -43,5 +43,7 @@ export class RequestedBaanChangeDTO {
 
 export class PreferBaanRequestCountDTO {
   baanID: number;
+  memberCount: number;
+  capacity: number;
   requestCount: number;
 }

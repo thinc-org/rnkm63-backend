@@ -14,6 +14,10 @@ export class BaanService {
     return await this.baanRepository.findOne(baanID);
   }
 
+  async findAllBaan(): Promise<Baan[]> {
+    return await this.baanRepository.find();
+  }
+
   //Begin Test Section
   async generateBaanDatabase() {
     const baanData = [
