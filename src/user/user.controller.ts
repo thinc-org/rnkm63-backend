@@ -9,6 +9,7 @@ import {
 } from './dto/user.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { HeaderGuard } from '../auth/header.guard';
+import { PhaseGuard } from '../utility/phase.guard';
 import { RequestWithUserID } from '../utility/type';
 
 @ApiTags('user')
@@ -41,7 +42,7 @@ export class UserController {
 
   //Begin For Phase 2
   @Post('requestBaanChange')
-  @UseGuards(JwtAuthGuard, HeaderGuard)
+  @UseGuards(JwtAuthGuard, HeaderGuard, PhaseGuard)
   async requestedBaanChange(
     @Req() req: RequestWithUserID,
     @Body() requestedBaanChangeDTO: RequestedBaanChangeDTO,
@@ -53,7 +54,7 @@ export class UserController {
   }
 
   @Get('getAllUserPreferBaan')
-  @UseGuards(JwtAuthGuard, HeaderGuard)
+  @UseGuards(JwtAuthGuard, HeaderGuard, PhaseGuard)
   async getAllUserPreferBaan(): Promise<PreferBaanRequestCountDTO[]> {
     return await this.userService.getAllUserPreferBaan();
   }

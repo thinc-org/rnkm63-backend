@@ -11,11 +11,6 @@ export class PhaseGuard implements CanActivate {
   ) {}
 
   canActivate(): boolean | Promise<boolean> | Observable<boolean> {
-    //Begin For Swagger In Dev Mode
-    if (this.configService.get<boolean>('inDev')) {
-      return true;
-    }
-    //End For Swagger In Dev Mode
     const check = async () => {
       const phase = (await this.globalService.getGlobal()).phaseCount;
       return phase >= 2;
