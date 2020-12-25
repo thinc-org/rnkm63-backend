@@ -31,24 +31,20 @@ export class UserService {
     private baanService: BaanService,
   ) {}
 
-  getUserFaculty(uid: string): FacultyName {
+  getUserFacultyID(uid: string): string {
     const facultyID = uid.slice(uid.length - 2);
 
-    return facultyList[facultyID];
+    return facultyID;
   }
 
   async getProfile(uid: string): Promise<ReturnUserDTO> {
     const user = await this.userRepository.findOne({ uid: uid });
     const isInDB = typeof user === 'undefined' ? false : true;
-    const faculty = this.getUserFaculty(uid);
+    const facultyID = this.getUserFacultyID(uid);
 
-    if (typeof faculty === 'undefined')
-      throw new HttpException('User Faculty Not Found', HttpStatus.NOT_FOUND);
     const responseData: ReturnUserDTO = {
       data: isInDB
         ? {
-            facultyEn: faculty.facultyEn,
-            facultyTh: faculty.facultyTh,
             prefixname: user.prefixname,
             realname: user.realname,
             surname: user.surname,
@@ -78,6 +74,7 @@ export class UserService {
       isTransfer: isInDB ? user.isTransfer : false,
       currentBaan: isInDB ? user.currentBaan : 0,
       preferBaan: isInDB ? user.preferBaan : null,
+      facultyID: facultyID,
     };
     return responseData;
   }
