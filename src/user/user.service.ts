@@ -14,7 +14,6 @@ import {
   PreferBaanRequestCountDTO,
 } from './dto/user.dto';
 import { facultyList } from '../utility/facultyList';
-import { FacultyName } from '../utility/type';
 import { GlobalService } from '../global/global.service';
 import { BaanService } from '../baan/baan.service';
 
