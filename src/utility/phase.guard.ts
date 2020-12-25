@@ -1,4 +1,4 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Injectable, CanActivate } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Observable } from 'rxjs';
 import { GlobalService } from 'src/global/global.service';
@@ -10,9 +10,7 @@ export class PhaseGuard implements CanActivate {
     private globalService: GlobalService,
   ) {}
 
-  canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
+  canActivate(): boolean | Promise<boolean> | Observable<boolean> {
     //Begin For Swagger In Dev Mode
     if (this.configService.get<boolean>('inDev')) {
       return true;
