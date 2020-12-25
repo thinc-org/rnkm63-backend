@@ -13,11 +13,10 @@ export class ReturnUserDTO {
   isTransfer: boolean;
   currentBaan: number;
   preferBaan: number | null;
+  facultyID: string;
 }
 
 export class UserData {
-  facultyEn: string;
-  facultyTh: string;
   prefixname: string;
   realname: string;
   surname: string;
