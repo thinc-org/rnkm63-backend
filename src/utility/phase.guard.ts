@@ -6,7 +6,7 @@ import { GlobalService } from 'src/global/global.service';
 export class PhaseGuard implements CanActivate {
   constructor(private globalService: GlobalService) {}
 
-  canActivate(): boolean | Promise<boolean> | Observable<boolean> {
+  async canActivate(): Promise<boolean> {
     return (await this.globalService.getGlobal()).phaseCount >= 2;
   }
 }
