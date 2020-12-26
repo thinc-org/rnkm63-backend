@@ -1,5 +1,4 @@
 import { Injectable, CanActivate } from '@nestjs/common';
-import { Observable } from 'rxjs';
 import { GlobalService } from 'src/global/global.service';
 
 @Injectable()
