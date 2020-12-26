@@ -38,4 +38,11 @@ export class GlobalService {
   async getGlobalRound(): Promise<number> {
     return (await this.getGlobal()).roundCount;
   }
+
+  async setGlobalPhase(phaseNumber: number): Promise<Global> {
+    const global = await this.globalRepository.findOne(1);
+
+    global.phaseCount = phaseNumber;
+    return await this.globalRepository.save(global);
+  }
 }
