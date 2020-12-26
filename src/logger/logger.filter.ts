@@ -36,11 +36,10 @@ export class LoggerFilter implements ExceptionFilter {
         }
       }
     }
-    if (err.code === 500) {
+    if (err.code >= 500) {
       console.error(exception);
+      this.loggerService.addError(err);
     }
-
-    this.loggerService.addError(err);
 
     response.status(err.code).json({
       statusCode: err.code,
