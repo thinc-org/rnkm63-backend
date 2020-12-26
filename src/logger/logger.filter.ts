@@ -22,7 +22,7 @@ export class LoggerFilter implements ExceptionFilter {
       reqID: (request as RequestWithID).reqid,
       code: 500,
       message: '',
-      error: JSON.stringify(serializeError(exception)),
+      error: serializeError(exception).stack,
     } as Error;
 
     if (exception instanceof HttpException) {
