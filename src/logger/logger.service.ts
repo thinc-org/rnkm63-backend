@@ -21,7 +21,7 @@ export class LoggerService implements OnModuleDestroy {
     this.writeApi.close();
   }
   private createPoints(log: Logger) {
-    const points = new Point('request')
+    const points = new Point('event')
       .tag('uid', log.uid)
       .tag('method', log.method)
       .tag('path', log.path)
