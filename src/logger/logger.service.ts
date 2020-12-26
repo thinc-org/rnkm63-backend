@@ -33,10 +33,8 @@ export class LoggerService implements OnModuleDestroy {
   }
   private createErrorPoints(error: Error) {
     const points = new Point('error')
-      .stringField('reqID', error.reqID)
-      .intField('code', error.code)
-      .stringField('message', error.message)
-      .stringField('error', error.message);
+      .tag('reqID', error.reqID)
+      .stringField('error', error.error);
     return points;
   }
 
