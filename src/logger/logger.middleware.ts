@@ -14,7 +14,6 @@ export class LoggerMiddleware implements NestMiddleware {
   }
   extractVariable(req, res) {
     return {
-      ipAddress: req.ip,
       uid: (req as RequestWithUserID).user?.uid,
       method: req.method,
       path: req.originalUrl,
@@ -27,7 +26,6 @@ export class LoggerMiddleware implements NestMiddleware {
     const start = Date.now();
     res.on('finish', () => {
       const result = {
-        timeRequest: start,
         ...this.extractVariable(req, res),
         duration: Date.now() - start,
         reqID: (req as RequestWithID).reqid,

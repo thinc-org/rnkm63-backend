@@ -22,11 +22,9 @@ export class LoggerService implements OnModuleDestroy {
   }
   private createPoints(log: Logger) {
     const points = new Point('request')
-      .intField('timeRequest', log.timeRequest)
-      .stringField('ipAddress', log.ipAddress)
-      .stringField('uid', log.uid)
-      .stringField('method', log.method)
-      .stringField('path', log.path)
+      .tag('uid', log.uid)
+      .tag('method', log.method)
+      .tag('path', log.path)
       .stringField('reqBody', log.reqBody)
       .intField('status', log.status)
       .intField('duration', log.duration)
@@ -59,8 +57,6 @@ export interface Error {
 }
 
 export interface Logger {
-  timeRequest: number;
-  ipAddress: string;
   uid: string;
   method: string;
   path: string;
