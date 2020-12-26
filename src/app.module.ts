@@ -8,6 +8,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ScheduleModule } from '@nestjs/schedule';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { BaanModule } from './baan/baan.module';
@@ -19,6 +20,7 @@ import { LoggerFilter } from './logger/logger.filter';
 import { DevMiddleware } from './dev.middleware';
 import { APP_FILTER } from '@nestjs/core';
 import { AssignmentModule } from './assignment/assignment.module';
+import { CronService } from './cron/cron.service';
 import configuration from './config/configuration';
 
 @Module({
@@ -41,6 +43,7 @@ import configuration from './config/configuration';
       }),
       inject: [ConfigService],
     }),
+    ScheduleModule.forRoot(),
     AuthModule,
     UserModule,
     BaanModule,
@@ -55,6 +58,7 @@ import configuration from './config/configuration';
       provide: APP_FILTER,
       useClass: LoggerFilter,
     },
+    CronService,
   ],
 })
 export class AppModule implements NestModule {
