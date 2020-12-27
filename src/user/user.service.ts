@@ -142,7 +142,7 @@ export class UserService {
     else if (user.isConfirm)
       throw new HttpException('Already confirmed', HttpStatus.CONFLICT);
     else if (user.currentBaan === -1)
-      throw new HttpException('Already leave activity', HttpStatus.CONFLICT);
+      throw new HttpException('Already left activity', HttpStatus.CONFLICT);
     else {
       user.currentBaan = -1;
       this.userRepository.save(user);
