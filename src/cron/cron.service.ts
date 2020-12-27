@@ -6,7 +6,7 @@ import { GlobalService } from '../global/global.service';
 export class CronService {
   constructor(private globalService: GlobalService) {}
 
-  @Cron(new Date("2021-01-09T12:00:00+07:00"))
+  @Cron(new Date('2021-01-09T12:00:00+07:00'))
   setGlobalPhaseCron() {
     this.globalService.setGlobalPhase(2);
   }

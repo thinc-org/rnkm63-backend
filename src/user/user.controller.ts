@@ -32,6 +32,12 @@ export class UserController {
     return await this.userService.postProfile(req.user.uid, confirmUserDTO);
   }
 
+  @Post('leaveActivity')
+  @UseGuards(JwtAuthGuard, HeaderGuard)
+  async leaveActivity(@Req() req: RequestWithUserID): Promise<string> {
+    return await this.userService.leaveActivity(req.user.uid);
+  }
+
   @Get('getUploadPolicy')
   @UseGuards(JwtAuthGuard, HeaderGuard)
   getUploadCred(@Req() req: RequestWithUserID) {

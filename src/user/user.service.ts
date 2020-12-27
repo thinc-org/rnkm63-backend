@@ -127,9 +127,27 @@ export class UserService {
       confirmUserDTO.edit
     )
       user.editPhase = (await this.globalService.getGlobal()).phaseCount;
+    user.currentBaan = user.currentBaan === -1 ? 0 : user.currentBaan;
     user.isConfirm = true;
     await this.userRepository.save(user);
     return 'Success';
+  }
+
+  async leaveActivity(uid: string): Promise<string> {
+    const user = await this.userRepository.findOne({ uid: uid });
+    const isInDB = typeof user === 'undefined' ? false : true;
+
+    if (!isInDB)
+      throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
+    else if (user.isConfirm)
+      throw new HttpException('Already confirmed', HttpStatus.CONFLICT);
+    else if (user.currentBaan === -1)
+      throw new HttpException('Already leave activity', HttpStatus.CONFLICT);
+    else {
+      user.currentBaan = -1;
+      this.userRepository.save(user);
+      return 'Leave Activity Successfully';
+    }
   }
 
   getImgFileName(ouid: string): string {
