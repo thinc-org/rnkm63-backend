@@ -146,7 +146,7 @@ export class UserService {
     else {
       user.currentBaan = -1;
       this.userRepository.save(user);
-      return 'Leave Activity Successfully';
+      return 'Left activity successfully';
     }
   }
 
