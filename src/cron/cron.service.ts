@@ -6,8 +6,8 @@ import { GlobalService } from '../global/global.service';
 export class CronService {
   constructor(private globalService: GlobalService) {}
 
-  @Cron('0 0 12 9 1 *')
-  handleCron() {
+  @Cron(new Date(2021, 0, 9, 12))
+  setGlobalPhaseCron() {
     this.globalService.setGlobalPhase(2);
   }
 }
