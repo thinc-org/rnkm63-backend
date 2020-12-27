@@ -127,7 +127,7 @@ export class UserService {
       confirmUserDTO.edit
     )
       user.editPhase = (await this.globalService.getGlobal()).phaseCount;
-    user.currentBaan = user.currentBaan === -1 ? 0 : user.currentBaan;
+    if (user.currentBaan === -1) user.currentBaan = 0;
     user.isConfirm = true;
     await this.userRepository.save(user);
     return 'Success';
