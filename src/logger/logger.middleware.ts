@@ -12,11 +12,11 @@ export class LoggerMiddleware implements NestMiddleware {
     res.append('X-Request-ID', reqID);
     (req as RequestWithID).reqid = reqID;
   }
-  extractVariable(req, res) {
+  extractVariable(req: Request, res: Response) {
     return {
       uid: (req as RequestWithUserID).user?.uid,
       method: req.method,
-      path: req.originalUrl,
+      path: req.path,
       reqBody: JSON.stringify(req.body),
       status: res.statusCode,
     };
