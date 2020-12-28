@@ -17,10 +17,8 @@ export class LoggerService {
       .tag('uid', log.uid)
       .tag('method', log.method)
       .tag('path', log.path)
-      .stringField('reqBody', log.reqBody)
-      .intField('status', log.status)
-      .intField('duration', log.duration)
-      .stringField('reqID', log.reqID);
+      .tag('status', log.status)
+      .stringField('reqBody', log.reqBody);
     return points;
   }
   private createErrorPoints(error: Error) {
