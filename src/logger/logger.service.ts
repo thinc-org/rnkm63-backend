@@ -17,7 +17,7 @@ export class LoggerService {
       .tag('uid', log.uid)
       .tag('method', log.method)
       .tag('path', log.path)
-      .tag('status', log.status)
+      .tag('status', log.status.toString())
       .stringField('reqBody', log.reqBody);
     return points;
   }
@@ -64,7 +64,7 @@ export interface Logger {
   method: string;
   path: string;
   reqBody: string;
-  status: string;
+  status: number;
   duration: number;
   reqID: string;
 }
