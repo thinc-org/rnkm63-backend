@@ -18,6 +18,7 @@ export class LoggerService {
       .tag('method', log.method)
       .tag('path', log.path)
       .tag('status', log.status.toString())
+      .tag('duration', log.duration.toString())
       .stringField('reqBody', log.reqBody);
     return points;
   }
