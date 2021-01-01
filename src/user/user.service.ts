@@ -74,6 +74,8 @@ export class UserService {
       currentBaan: isInDB ? user.currentBaan : 0,
       preferBaan: isInDB ? user.preferBaan : null,
       facultyID: facultyID,
+      phaseCount: await this.globalService.getGlobalPhase(),
+      roundCount: await this.globalService.getGlobalRound(),
     };
     return responseData;
   }

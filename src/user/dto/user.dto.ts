@@ -14,6 +14,8 @@ export class ReturnUserDTO {
   currentBaan: number;
   preferBaan: number | null;
   facultyID: string;
+  phaseCount: number;
+  roundCount: number;
 }
 
 export class UserData {

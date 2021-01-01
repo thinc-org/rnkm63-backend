@@ -35,12 +35,12 @@ export class GlobalService {
     return this.cacheGlobalConfig;
   }
 
-  async getGlobalRound(): Promise<number> {
-    return (await this.getGlobal()).roundCount;
-  }
-
   async getGlobalPhase(): Promise<number> {
     return (await this.getGlobal()).phaseCount;
+  }
+
+  async getGlobalRound(): Promise<number> {
+    return (await this.getGlobal()).roundCount;
   }
 
   async setGlobalPhase(phaseNumber: number): Promise<Global> {
