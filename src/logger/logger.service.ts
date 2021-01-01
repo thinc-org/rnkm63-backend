@@ -38,7 +38,7 @@ export class LoggerService {
     const point = this.createPoints(log);
     writeApi.writePoint(point);
 
-    writeApi.close();
+    writeApi.close().catch(e => console.error('Closing Logger failed', e));
   }
 
   addError(error: Error) {
@@ -50,7 +50,7 @@ export class LoggerService {
     const point = this.createErrorPoints(error);
     writeApi.writePoint(point);
 
-    writeApi.close();
+    writeApi.close().catch(e => console.error('Closing Logger failed', e));
   }
 }
 export interface Error {
