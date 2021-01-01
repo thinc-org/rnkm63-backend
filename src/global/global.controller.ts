@@ -9,4 +9,9 @@ export class GlobalController {
   async getRound(): Promise<number> {
     return await this.globalService.getGlobalRound();
   }
+
+  @Get('phase')
+  async getPhase(): Promise<number> {
+    return await this.globalService.getGlobalPhase();
+  }
 }
