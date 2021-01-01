@@ -39,6 +39,10 @@ export class GlobalService {
     return (await this.getGlobal()).roundCount;
   }
 
+  async getGlobalPhase(): Promise<number> {
+    return (await this.getGlobal()).phaseCount;
+  }
+
   async setGlobalPhase(phaseNumber: number): Promise<Global> {
     const global = await this.globalRepository.findOne(1);
 
