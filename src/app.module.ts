@@ -65,7 +65,12 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(GlobalMiddleware)
-      // .exclude('global')
+      .exclude(
+        { path: '/api/auth/verify', method: RequestMethod.GET },
+        { path: '/api/auth/logout', method: RequestMethod.GET },
+        { path: '/api/assignment/getHistory', method: RequestMethod.GET },
+        { path: '/api/user/profile', method: RequestMethod.GET },
+      )
       .forRoutes({ path: '*', method: RequestMethod.ALL });
     consumer
       .apply(LoggerMiddleware)
