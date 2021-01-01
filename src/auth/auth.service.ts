@@ -53,7 +53,10 @@ export class AuthService {
           error.response?.data,
         );
         throw new HttpException(
-          "Can't connect to Chula SSO",
+          {
+            message: "Can't connect to Chula SSO",
+            error: error,
+          },
           HttpStatus.INTERNAL_SERVER_ERROR,
         );
       }
