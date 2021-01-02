@@ -40,6 +40,7 @@ export class UserService {
     const user = await this.userRepository.findOne({ uid: uid });
     const isInDB = typeof user === 'undefined' ? false : true;
     const facultyID = this.getUserFacultyID(uid);
+    const globalConfig = await this.globalService.getGlobal();
 
     const responseData: ReturnUserDTO = {
       data: isInDB
@@ -74,8 +75,8 @@ export class UserService {
       currentBaan: isInDB ? user.currentBaan : 0,
       preferBaan: isInDB ? user.preferBaan : null,
       facultyID: facultyID,
-      phaseCount: await this.globalService.getGlobalPhase(),
-      roundCount: await this.globalService.getGlobalRound(),
+      phaseCount: globalConfig.phaseCount,
+      roundCount: globalConfig.roundCount,
     };
     return responseData;
   }
