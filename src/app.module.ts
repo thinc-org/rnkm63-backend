@@ -78,6 +78,7 @@ export class AppModule implements NestModule {
       .apply(LoggerMiddleware)
       .forRoutes({ path: '*', method: RequestMethod.ALL });
     consumer.apply(DevMiddleware).forRoutes(
+      { path: 'auth/user', method: RequestMethod.ALL },
       { path: 'user/getAllUser', method: RequestMethod.ALL },
       { path: 'user/generateUser', method: RequestMethod.ALL },
       { path: 'baan/generateBaanDatabase', method: RequestMethod.ALL },
