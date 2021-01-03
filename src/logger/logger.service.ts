@@ -1,17 +1,31 @@
-import { Injectable } from '@nestjs/common';
-import { InfluxDB, Point } from '@influxdata/influxdb-client';
+import { Injectable, OnModuleDestroy } from '@nestjs/common';
+import { InfluxDB, Point, WriteApi } from '@influxdata/influxdb-client';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class LoggerService {
+export class LoggerService implements OnModuleDestroy {
   private client: InfluxDB;
+  private writeApi: WriteApi;
 
   constructor(private configService: ConfigService) {
     this.client = new InfluxDB({
       url: this.configService.get<string>('influxdb.url'),
       token: this.configService.get<string>('influxdb.token'),
     });
+    this.writeApi = this.client.getWriteApi(
+      this.configService.get<string>('influxdb.org'),
+      this.configService.get<string>('influxdb.bucket'),
+    );
   }
+
+  async onModuleDestroy() {
+    try {
+      await this.writeApi.close();
+    } catch (e) {
+      console.error('Closing Logger failed', e);
+    }
+  }
+
   private createPoints(log: Logger) {
     const points = new Point('event')
       .tag('uid', log.uid)
@@ -30,27 +44,13 @@ export class LoggerService {
   }
 
   addLog(log: Logger) {
-    const writeApi = this.client.getWriteApi(
-      this.configService.get<string>('influxdb.org'),
-      this.configService.get<string>('influxdb.bucket'),
-    );
-
     const point = this.createPoints(log);
-    writeApi.writePoint(point);
-
-    writeApi.close().catch(e => console.error('Closing Logger failed', e));
+    this.writeApi.writePoint(point);
   }
 
   addError(error: Error) {
-    const writeApi = this.client.getWriteApi(
-      this.configService.get<string>('influxdb.org'),
-      this.configService.get<string>('influxdb.bucket'),
-    );
-
     const point = this.createErrorPoints(error);
-    writeApi.writePoint(point);
-
-    writeApi.close().catch(e => console.error('Closing Logger failed', e));
+    this.writeApi.writePoint(point);
   }
 }
 export interface Error {
