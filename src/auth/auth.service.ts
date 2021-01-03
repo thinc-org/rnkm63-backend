@@ -8,6 +8,7 @@ import { ConfigService } from '@nestjs/config';
 import { Response } from 'express';
 import axios from 'axios';
 import { JwtService } from '@nestjs/jwt';
+import { serializeError } from 'serialize-error';
 
 @Injectable()
 export class AuthService {
@@ -36,14 +37,22 @@ export class AuthService {
       clearTimeout(timeout);
       return user.data.ouid;
     } catch (error) {
+      const serializedError = serializeError(error);
+
       if (error?.response?.status === 401) {
         throw new HttpException(
-          'Ticket Not Verified',
+          {
+            message: 'Ticket Not Verified',
+            error: serializedError,
+          },
           HttpStatus.UNPROCESSABLE_ENTITY,
         );
       } else if (error?.response?.status === 403) {
         throw new HttpException(
-          'Too Many Requests',
+          {
+            message: 'Too Many Requests',
+            error: serializedError,
+          },
           HttpStatus.TOO_MANY_REQUESTS,
         );
       } else {
@@ -55,7 +64,7 @@ export class AuthService {
         throw new HttpException(
           {
             message: "Can't connect to Chula SSO",
-            error: error,
+            error: serializedError,
           },
           HttpStatus.INTERNAL_SERVER_ERROR,
         );
