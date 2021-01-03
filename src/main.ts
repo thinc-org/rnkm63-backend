@@ -31,6 +31,8 @@ async function bootstrap() {
 
   app.use(cookieParser());
 
+  app.enableShutdownHooks();
+
   if (configService.get('cors.use')) {
     app.enableCors({
       origin: configService.get('cors.origin'),
