@@ -16,12 +16,10 @@ import {
 import { facultyList } from '../utility/facultyList';
 import { GlobalService } from '../global/global.service';
 import { BaanService } from '../baan/baan.service';
+import { cachePromise } from 'src/utility/function';
 
 @Injectable()
 export class UserService {
-  private cacheAllUserPreferBaan: PreferBaanRequestCountDTO[] = null;
-  private cacheAllUserPreferBaanTimeStamp = 0;
-
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
@@ -217,10 +215,8 @@ export class UserService {
     }
   }
 
-  async getAllUserPreferBaan(): Promise<PreferBaanRequestCountDTO[]> {
-    if (new Date().getTime() - this.cacheAllUserPreferBaanTimeStamp >= 10000) {
-      this.cacheAllUserPreferBaanTimeStamp = new Date().getTime();
-      const allUserPreferBaan = [];
+  getAllUserPreferBaan = cachePromise(
+    async (): Promise<PreferBaanRequestCountDTO[]> => {
       const [allBaanData, allUserRequest] = await Promise.all([
         this.baanService.findAllBaan(),
         this.userRepository
@@ -233,23 +229,18 @@ export class UserService {
           .getRawMany(),
       ]);
       const userRequestCount = [];
-      for (const e of allUserRequest)
+      for (const e of allUserRequest) {
         userRequestCount[e.baanID] = e.requestCount;
-      for (const e of allBaanData) {
-        allUserPreferBaan.push({
-          baanID: e.id,
-          capacity: e.capacity,
-          memberCount: e.memberCount,
-          requestCount:
-            typeof userRequestCount[e.id] === 'undefined'
-              ? 0
-              : userRequestCount[e.id],
-        });
       }
-      this.cacheAllUserPreferBaan = allUserPreferBaan;
-    }
-    return this.cacheAllUserPreferBaan;
-  }
+      return allBaanData.map(baan => ({
+        baanID: baan.id,
+        capacity: baan.capacity,
+        memberCount: baan.memberCount,
+        requestCount: userRequestCount[baan.id] || 0,
+      }));
+    },
+    10 * 60 * 1000, // 10 minutes
+  );
   //End For Phase 2
 
   //Begin For Test Only Section

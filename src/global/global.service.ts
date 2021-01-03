@@ -1,13 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { cachePromise } from 'src/utility/function';
 import { Repository } from 'typeorm';
 import { Global } from './global.entity';
 
 @Injectable()
 export class GlobalService {
-  private cacheGlobalConfig: Global = null;
-  private cacheTimeStamp = 0;
-
   constructor(
     @InjectRepository(Global)
     private globalRepository: Repository<Global>,
@@ -24,16 +22,16 @@ export class GlobalService {
     return await this.globalRepository.save(global);
   }
 
-  async getGlobal(): Promise<Global> {
-    if (new Date().getTime() - this.cacheTimeStamp >= 10000) {
-      this.cacheTimeStamp = new Date().getTime();
+  getGlobal = cachePromise(
+    async (): Promise<Global> => {
       const globalConfig = await this.globalRepository.findOne(1);
-      if (typeof globalConfig === 'undefined')
-        this.cacheGlobalConfig = await this.createGlobal();
-      else this.cacheGlobalConfig = globalConfig;
-    }
-    return this.cacheGlobalConfig;
-  }
+      if (typeof globalConfig === 'undefined') {
+        return await this.createGlobal();
+      } else {
+        return globalConfig;
+      }
+    },
+  );
 
   async setGlobalPhase(phaseNumber: number): Promise<Global> {
     const global = await this.globalRepository.findOne(1);
