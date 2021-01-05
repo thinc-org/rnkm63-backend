@@ -239,7 +239,7 @@ export class UserService {
         requestCount: userRequestCount[baan.id] || 0,
       }));
     },
-    10 * 60 * 1000, // 10 minutes
+    60 * 1000, // 1 minutes
   );
   //End For Phase 2
 
